@@ -1,60 +1,70 @@
 import streamlit as st 
 import pandas as pd
 import sqlite3
-import matplotlib.pyplot as plt
-import seaborn as sns
 import altair as alt
 
 st.set_page_config(page_title = 'Retail Sales Analysis',
-                    layout='wide',
-                    initial_sidebar_state='collapsed')
+                   layout='wide',
+                   initial_sidebar_state='collapsed')
 
+# Define the containers
 header = st.container()
 analysis = st.container()
 dashboard = st.container()
 
-@st.cache_data
-def get_data():
-    df = pd.read_csv('clean_data.csv')
-    
-    connection = sqlite3.connect('database.db')
-    df.to_sql('case_table', connection, if_exists='replace')    
-    return df
+# Define the header section
+with header:
+    st.title('Retail Sales Analysis')
+    st.subheader('Visualizing seasonal trends in average order value')
+    st.markdown('---')
 
-df = get_data()
+# Define the analysis section
+with analysis:
+    st.subheader('Data Analysis')
+    st.write('This section provides a detailed analysis of the data.')
 
-# Import required libraries
-import altair as alt
+    # Load the data
+    @st.cache_data
+    def get_data():
+        df = pd.read_csv('clean_data.csv')
+        connection = sqlite3.connect('database.db')
+        df.to_sql('case_table', connection, if_exists='replace')    
+        return df
 
-# Convert the transaction date column to datetime format
-df['tran_date'] = pd.to_datetime(df['tran_date'])
+    df = get_data()
 
-# Extract the year and month from the transaction date
-df['year'] = df['tran_date'].dt.year
-df['month'] = df['tran_date'].dt.month
+    # Convert the transaction date column to datetime format
+    df['tran_date'] = pd.to_datetime(df['tran_date'])
 
-# Calculate the AOV for each month
-aov_monthly = df.groupby(['prod_cat','year', 'month']).mean().reset_index()
-#aov_monthly = df.groupby(['year', 'month'])['AOV'].mean().reset_index()
+    # Extract the year and month from the transaction date
+    df['year'] = df['tran_date'].dt.year
+    df['month'] = df['tran_date'].dt.month
 
-# Create an Altair chart
-# Create a selection tool for the year
-year_select = alt.selection_single(
-    name='Year',
-    fields=['year'],
-    bind=alt.binding_select(options=aov_monthly['year'].unique().tolist())
-)
+    # Calculate the AOV for each month
+    aov_monthly = df.groupby(['prod_cat', 'year', 'month']).mean().reset_index()
 
-# Create an Altair chart with a dropdown menu and a tooltip
-aov_chart = alt.Chart(aov_monthly).mark_line().encode(
-    x='month:N',
-    y=alt.Y('AOV:Q', axis=alt.Axis(title='Average Order Value')),
-    color='prod_cat:N',
-    tooltip=['prod_cat:N', 'month:N', 'AOV:Q']
-).add_selection(year_select).transform_filter(year_select).properties(
-    title='Seasonality of Average Order Value'
-)
+    # Create a selection tool for the year
+    year_select = alt.selection_single(
+        name='Year',
+        fields=['year'],
+        bind=alt.binding_select(options=aov_monthly['year'].unique().tolist())
+    )
 
-# # Render the chart using Streamlit's Altair chart renderer
-st.altair_chart(aov_chart)
+    # Create an Altair chart with a dropdown menu and a tooltip
+    aov_chart = alt.Chart(aov_monthly).mark_line().encode(
+        x='month:N',
+        y=alt.Y('AOV:Q', axis=alt.Axis(title='Average Order Value')),
+        color='prod_cat:N',
+        tooltip=['prod_cat:N', 'month:N', 'AOV:Q']
+    ).add_selection(year_select).transform_filter(year_select).properties(
+        title='Seasonality of Average Order Value'
+    )
 
+    # Render the chart using Streamlit's Altair chart renderer
+    st.altair_chart(aov_chart)
+
+# Define the dashboard section
+with dashboard:
+    st.subheader('Dashboard')
+    st.write('This section provides an interactive dashboard to explore the data.')
+    st.markdown('---')

@@ -19,8 +19,6 @@ with header:
     st.markdown('---')
 
     
-year_filter = st.sidebar.radio('Select year:', df['year'].unique().tolist())
-
 # Define the analysis section
 with analysis:
     st.subheader('Data Analysis')
@@ -46,6 +44,8 @@ with analysis:
     df['year'] = df['tran_date'].dt.year
     df['month'] = df['tran_date'].dt.month
 
+    year_filter = st.sidebar.radio('Select year:', df['year'].unique().tolist())
+    
     df = df[df['year'] == year_filter]
     # Calculate the AOV for each month
     aov_monthly = df.groupby(['prod_cat', 'year', 'month']).mean().reset_index()

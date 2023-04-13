@@ -26,7 +26,7 @@ df = get_data()
 df_trend = df[['tran_date', 'AOV', 'prod_cat']].copy()
 
 # # Convert 'tran_date' column to datetime format
-# df_trend['tran_date'] = pd.to_datetime(df_trend['tran_date'])
+df_trend['tran_date'] = pd.to_datetime(df_trend['tran_date'], infer_datetime_format=True, errors='coerce')
 
 # # Extract month from 'tran_date' column and create a new column 'month'
 # df_trend['month'] = df_trend['tran_date'].dt.month

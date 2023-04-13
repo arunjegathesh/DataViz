@@ -34,7 +34,7 @@ df['year'] = df['tran_date'].dt.year
 df['month'] = df['tran_date'].dt.month
 
 # Calculate the AOV for each month
-aov_monthly = df.groupby(['prod_cat', 'month']).mean().reset_index()
+aov_monthly = df.groupby(['prod_cat','year', 'month']).mean().reset_index()
 #aov_monthly = df.groupby(['year', 'month'])['AOV'].mean().reset_index()
 
 # Create an Altair chart
@@ -42,7 +42,7 @@ aov_monthly = df.groupby(['prod_cat', 'month']).mean().reset_index()
 year_select = alt.selection_single(
     name='Year',
     fields=['year'],
-    bind=alt.binding_select(options=df['year'].unique().tolist())
+    bind=alt.binding_select(options=aov_monthly['year'].unique().tolist())
 )
 
 # Create an Altair chart with a dropdown menu and a tooltip

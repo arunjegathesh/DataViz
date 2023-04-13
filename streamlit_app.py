@@ -39,10 +39,10 @@ aov_monthly = df.groupby(['prod_cat', 'month']).mean().reset_index()
 
 # Create an Altair chart
 # Create a selection tool for the year
-prod_cat_select = alt.selection_single(
-    name='Prod',
-    fields=['prod_cat'],
-    bind=alt.binding_select(options=aov_monthly['prod_cat'].unique().tolist())
+year_select = alt.selection_single(
+    name='Year',
+    fields=['year'],
+    bind=alt.binding_select(options=df['year'].unique().tolist())
 )
 
 # Create an Altair chart with a dropdown menu and a tooltip
@@ -51,7 +51,7 @@ aov_chart = alt.Chart(aov_monthly).mark_line().encode(
     y=alt.Y('AOV:Q', axis=alt.Axis(title='Average Order Value')),
     color='prod_cat:N',
     tooltip=['prod_cat:N', 'month:N', 'AOV:Q']
-).add_selection(prod_cat_select).transform_filter(prod_cat_select).properties(
+).add_selection(year_select).transform_filter(year_select).properties(
     title='Seasonality of Average Order Value'
 )
 

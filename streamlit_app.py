@@ -17,7 +17,22 @@ with header:
     st.title('Retail Sales Analysis')
     st.subheader('Visualizing seasonal trends in average order value')
     st.markdown('---')
+    
+with st.sidebar:
+    Campaign_filter = st.multiselect(label= 'Select The country',
+                                options=df['city_code'].unique(),
+                                default=df['city_code'].unique())
 
+df1 = df.query('campaign == @Campaign_filter')
+
+total_amount = float(df1['total_amt'].sum())
+average_aov = float(df1['AOV'].mean())
+total_qty = float(df1['Qty'].sum())
+#total_conversions= float(df1['Total_Conversion'].sum()) 
+#total_approved_conversions = float(df1['Approved_Conversion'].sum())
+
+
+total_amount,average_aov,total_qty = st.columns(3,gap='large')
     
 # Define the analysis section
 with analysis:

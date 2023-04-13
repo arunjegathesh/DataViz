@@ -9,6 +9,7 @@ st.set_page_config(page_title = 'Retail Sales Analysis',
 
 # Define the containers
 header = st.container()
+kpis = st.container()
 analysis = st.container()
 dashboard = st.container()
 
@@ -23,9 +24,7 @@ with header:
 with st.sidebar:
   
     def get_data():
-    df = pd.read_csv('clean_data.csv')
-    connection = sqlite3.connect('database.db')
-    df.to_sql('case_table', connection, if_exists='replace')    
+    df = pd.read_csv('clean_data.csv')  
     return df
 
     df = get_data()
@@ -34,16 +33,26 @@ with st.sidebar:
                                 options=df['city_code'].unique(),
                                 default=df['city_code'].unique())
 
-df1 = df.query('campaign == @Campaign_filter')
+    
+with kpis:
+    st.subheader('KPIs Section Analysis')
+#    st.write('This section provides a detailed analysis of the data.')
+  
+    def get_data():
+      df = pd.read_csv('clean_data.csv') 
+      return df
 
-total_amount = float(df1['total_amt'].sum())
-average_aov = float(df1['AOV'].mean())
-total_qty = float(df1['Qty'].sum())
-#total_conversions= float(df1['Total_Conversion'].sum()) 
-#total_approved_conversions = float(df1['Approved_Conversion'].sum())
+    df = get_data()
 
+    df1 = df.query('campaign == @Campaign_filter')
 
-total_amount,average_aov,total_qty = st.columns(3,gap='large')
+    total_amount = float(df1['total_amt'].sum())
+    average_aov = float(df1['AOV'].mean())
+    total_qty = float(df1['Qty'].sum())
+    #total_conversions= float(df1['Total_Conversion'].sum()) 
+    #total_approved_conversions = float(df1['Approved_Conversion'].sum())
+
+    total_amount,average_aov,total_qty = st.columns(3,gap='large')
     
 # Define the analysis section
 with analysis:

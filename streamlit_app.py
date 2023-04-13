@@ -14,13 +14,6 @@ dashboard = st.container()
 
 @st.cache_data
 
-# Define the header section
-with header:
-    st.title('Retail Sales Analysis')
-    st.subheader('Visualizing seasonal trends in average order value')
-    st.markdown('---')
-  
-
 def get_data():
     df = pd.read_csv('clean_data.csv')
     connection = sqlite3.connect('database.db')
@@ -28,6 +21,13 @@ def get_data():
     return df
 
 df = get_data()
+
+
+# Define the header section
+with header:
+    st.title('Retail Sales Analysis')
+    st.subheader('Visualizing seasonal trends in average order value')
+    st.markdown('---')
 
 with st.sidebar:
     Campaign_filter = st.multiselect(label= 'Select the country',

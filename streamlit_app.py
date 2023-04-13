@@ -24,16 +24,16 @@ dashboard = st.container()
 
 # df = get_data()
 
-with header: 
-    st.title('Ball Mayhem')
-    st.header('Which Ad Frequency hits better revenue? ')
-    # st.text('time 1500') #time stamp to check if streamlit web app is updated
-    st.text(' ')
+# with header: 
+#     st.title('Ball Mayhem')
+#     st.header('Which Ad Frequency hits better revenue? ')
+#     # st.text('time 1500') #time stamp to check if streamlit web app is updated
+#     st.text(' ')
 
-with analysis:
-    connection = sqlite3.connect('database.db') 
-    st.subheader('Let us take a look at the data we have. ')
-    st.write(df.head(10))
+# with analysis:
+#     connection = sqlite3.connect('database.db') 
+#     st.subheader('Let us take a look at the data we have. ')
+#     st.write(df.head(10))
 
 #     s1, s2 = st.columns(2)
 

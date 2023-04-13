@@ -34,11 +34,6 @@ with analysis:
 
     df = get_data()
     
-    year_filter = st.sidebar.radio('Select year:', df['year'].unique().tolist())
-    
-    # Filter the data based on the year filter
-    df = df[df['year'] == year_filter]
-
     # Convert the transaction date column to datetime format
     df['tran_date'] = pd.to_datetime(df['tran_date'])
 
@@ -46,7 +41,11 @@ with analysis:
     df['year'] = df['tran_date'].dt.year
     df['month'] = df['tran_date'].dt.month
     
+    year_filter = st.sidebar.radio('Select year:', df['year'].unique().tolist())
+    
+    # Filter the data based on the year filter    
     df = df[df['year'] == year_filter]
+    
     # Calculate the AOV for each month
     aov_monthly = df.groupby(['prod_cat', 'year', 'month']).mean().reset_index()
 

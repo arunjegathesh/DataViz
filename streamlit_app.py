@@ -14,15 +14,6 @@ dashboard = st.container()
 
 @st.cache_data
 
-def get_data():
-    df = pd.read_csv('clean_data.csv')
-    connection = sqlite3.connect('database.db')
-    df.to_sql('case_table', connection, if_exists='replace')    
-    return df
-
-df = get_data()
-
-
 # Define the header section
 with header:
     st.title('Retail Sales Analysis')
@@ -30,6 +21,15 @@ with header:
     st.markdown('---')
 
 with st.sidebar:
+  
+    def get_data():
+    df = pd.read_csv('clean_data.csv')
+    connection = sqlite3.connect('database.db')
+    df.to_sql('case_table', connection, if_exists='replace')    
+    return df
+
+    df = get_data()
+    
     Campaign_filter = st.multiselect(label= 'Select the country',
                                 options=df['city_code'].unique(),
                                 default=df['city_code'].unique())
@@ -49,6 +49,14 @@ total_amount,average_aov,total_qty = st.columns(3,gap='large')
 with analysis:
     st.subheader('Data Analysis')
     st.write('This section provides a detailed analysis of the data.')
+    
+    def get_data():
+    df = pd.read_csv('clean_data.csv')
+    connection = sqlite3.connect('database.db')
+    df.to_sql('case_table', connection, if_exists='replace')    
+    return df
+
+    df = get_data()
     
     # Convert the transaction date column to datetime format
     df['tran_date'] = pd.to_datetime(df['tran_date'])

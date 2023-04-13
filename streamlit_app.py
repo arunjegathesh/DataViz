@@ -8,6 +8,10 @@ header = st.container()
 analysis = st.container()
 dashboard = st.container()
 
+st.set_page_config(page_title = 'Retail Sales Analysis',
+                    layout='wide',
+                    initial_sidebar_state='collapsed')
+
 #Caching the data for faster loading
 @st.cache_data
 # def get_data():
@@ -23,11 +27,11 @@ dashboard = st.container()
 
 # df = get_data()
 
-with header: 
-    st.title('Ball Mayhem')
-    st.header('Which Ad Frequency hits better revenue? ')
-    # st.text('time 1500') #time stamp to check if streamlit web app is updated
-    st.text(' ')
+# with header: 
+#     st.title('Ball Mayhem')
+#     st.header('Which Ad Frequency hits better revenue? ')
+#     # st.text('time 1500') #time stamp to check if streamlit web app is updated
+#     st.text(' ')
 
 # with analysis:
 #     connection = sqlite3.connect('database.db') 

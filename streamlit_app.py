@@ -10,4 +10,4 @@ dashboard = st.container()
 
 
 #Caching the data for faster loading
-@st.cache_data
+#@st.cache_data

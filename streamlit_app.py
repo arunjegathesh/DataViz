@@ -4,13 +4,13 @@ import sqlite3
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-header = st.container()
-analysis = st.container()
-dashboard = st.container()
-
 st.set_page_config(page_title = 'Retail Sales Analysis',
                     layout='wide',
                     initial_sidebar_state='collapsed')
+
+header = st.container()
+analysis = st.container()
+dashboard = st.container()
 
 #Caching the data for faster loading
 #@st.cache_data

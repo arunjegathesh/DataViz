@@ -38,16 +38,16 @@ df_trend['month'] = df_trend['tran_date'].dt.month
 # Group by 'prod_cat' and 'month' columns and calculate the mean of 'AOV'
 df_trend = df_trend.groupby(['prod_cat', 'month']).mean().reset_index()
 
-# Define a chart object with 'tran_date' as x-axis and 'AOV' as y-axis
-chart = alt.Chart(df_trend).mark_line().encode(
-    x=alt.X('tran_date', axis=alt.Axis(format='%d-%m-%Y')),
-    y=alt.Y('AOV', title='Average Order Value'),
-    color='prod_cat'
-).properties(
-    width=600,
-    height=400
-)
+# # Define a chart object with 'tran_date' as x-axis and 'AOV' as y-axis
+# chart = alt.Chart(df_trend).mark_line().encode(
+#     x=alt.X('tran_date', axis=alt.Axis(format='%d-%m-%Y')),
+#     y=alt.Y('AOV', title='Average Order Value'),
+#     color='prod_cat'
+# ).properties(
+#     width=600,
+#     height=400
+# )
 
-# Render the chart using Streamlit's Altair chart renderer
-st.altair_chart(chart)
+# # Render the chart using Streamlit's Altair chart renderer
+# st.altair_chart(chart)
 

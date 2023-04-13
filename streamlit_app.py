@@ -34,6 +34,8 @@ with analysis:
 
     df = get_data()
     
+    year_filter = st.sidebar.radio('Select year:', df['year'].unique().tolist())
+    
     # Filter the data based on the year filter
     df = df[df['year'] == year_filter]
 
@@ -43,8 +45,6 @@ with analysis:
     # Extract the year and month from the transaction date
     df['year'] = df['tran_date'].dt.year
     df['month'] = df['tran_date'].dt.month
-
-    year_filter = st.sidebar.radio('Select year:', df['year'].unique().tolist())
     
     df = df[df['year'] == year_filter]
     # Calculate the AOV for each month

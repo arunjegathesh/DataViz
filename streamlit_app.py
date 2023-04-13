@@ -13,7 +13,7 @@ st.set_page_config(page_title = 'Retail Sales Analysis',
                     initial_sidebar_state='collapsed')
 
 #Caching the data for faster loading
-@st.cache_data
+#@st.cache_data
 # def get_data():
 #     df = pd.read_csv('Voodoo_Test_Business_Case.csv', sep=';')
 

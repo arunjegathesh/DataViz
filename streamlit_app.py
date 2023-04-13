@@ -18,6 +18,9 @@ with header:
     st.subheader('Visualizing seasonal trends in average order value')
     st.markdown('---')
 
+    
+year_filter = st.sidebar.radio('Select year:', df['year'].unique().tolist())
+
 # Define the analysis section
 with analysis:
     st.subheader('Data Analysis')
@@ -32,6 +35,9 @@ with analysis:
         return df
 
     df = get_data()
+    
+    # Filter the data based on the year filter
+    df = df[df['year'] == year_filter]
 
     # Convert the transaction date column to datetime format
     df['tran_date'] = pd.to_datetime(df['tran_date'])
@@ -40,15 +46,16 @@ with analysis:
     df['year'] = df['tran_date'].dt.year
     df['month'] = df['tran_date'].dt.month
 
+    df = df[df['year'] == year_filter]
     # Calculate the AOV for each month
     aov_monthly = df.groupby(['prod_cat', 'year', 'month']).mean().reset_index()
 
     # Create a selection tool for the year
-    year_select = alt.selection_single(
-        name='Year',
-        fields=['year'],
-        bind=alt.binding_select(options=aov_monthly['year'].unique().tolist())
-    )
+#     year_select = alt.selection_single(
+#         name='Year',
+#         fields=['year'],
+#         bind=alt.binding_select(options=aov_monthly['year'].unique().tolist())
+#     )
 
     # Create an Altair chart with a dropdown menu and a tooltip
     aov_chart = alt.Chart(aov_monthly).mark_line().encode(
@@ -56,7 +63,7 @@ with analysis:
         y=alt.Y('AOV:Q', axis=alt.Axis(title='Average Order Value')),
         color='prod_cat:N',
         tooltip=['prod_cat:N', 'month:N', 'AOV:Q']
-    ).add_selection(year_select).transform_filter(year_select).properties(
+    ).properties(
         title='Seasonality of Average Order Value'
     )
 

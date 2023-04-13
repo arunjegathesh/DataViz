@@ -51,7 +51,7 @@ aov_chart = alt.Chart(aov_monthly).mark_line().encode(
     y=alt.Y('AOV:Q', axis=alt.Axis(title='Average Order Value')),
     color='prod_cat:N',
     tooltip=['prod_cat:N', 'month:N', 'AOV:Q']
-).add_selection(year_select).transform_filter(prod_cat_select).properties(
+).add_selection(prod_cat_select).transform_filter(prod_cat_select).properties(
     title='Seasonality of Average Order Value'
 )
 

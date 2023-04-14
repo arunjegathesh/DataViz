@@ -80,24 +80,40 @@ with kpis:
     
     st.markdown('---')
 
-with trend_line:
+with trend_line:  
+  
     st.subheader('Trend Analysis of AoV')
   
     # Calculate the AOV for each month
     aov_monthly = filtered_data.groupby(['prod_cat', 'city_code', 'Store_type', 'year', 'Age', 'month'])['total_amt'].sum().reset_index()
-
+    
     # Create an Altair chart with a dropdown menu and a tooltip
     aov_chart = alt.Chart(aov_monthly).mark_line().encode(
         x='month:N',
         y=alt.Y('total_amt:Q', axis=alt.Axis(title='Total Sales (in €)')),
         color='prod_cat:N',
         tooltip=['prod_cat:N', 'month:N', 'total_amt:Q']
-    ).properties(
+        ).properties(
+        width='container',
+        height=400, # Change the height as per your requirement
         title='Seasonality of Total Sales'
     )
-    
+
     # Render the chart using Streamlit's Altair chart renderer
     st.altair_chart(aov_chart)
+
+#     # Create an Altair chart with a dropdown menu and a tooltip
+#     aov_chart = alt.Chart(aov_monthly).mark_line().encode(
+#         x='month:N',
+#         y=alt.Y('total_amt:Q', axis=alt.Axis(title='Total Sales (in €)')),
+#         color='prod_cat:N',
+#         tooltip=['prod_cat:N', 'month:N', 'total_amt:Q']
+#     ).properties(
+#         title='Seasonality of Total Sales'
+#     )
+    
+#     # Render the chart using Streamlit's Altair chart renderer
+#     st.altair_chart(aov_chart)
     
     st.markdown('---')
 

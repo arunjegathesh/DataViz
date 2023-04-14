@@ -90,7 +90,7 @@ with trend_line:
     # Create an Altair chart with a dropdown menu and a tooltip
     aov_chart = alt.Chart(aov_monthly).mark_line(interpolate='basis').encode(
         x='month:N',
-        y=alt.Y('total_amt:Q', axis=alt.Axis(title='Average Order Value (in €)')),
+        y=alt.Y('AOV:Q', axis=alt.Axis(title='Average Order Value (in €)')),
         color='prod_cat:N',
         tooltip=['prod_cat:N', 'month:N', 'AOV:Q']
         ).properties(

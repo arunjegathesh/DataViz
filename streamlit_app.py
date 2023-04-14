@@ -146,7 +146,7 @@ with spider_plot:
 #                       polar=dict(radialaxis=dict(visible=True, range=[0, grouped_df['Qty'].max()])))
 
     fig.update_layout(title=f'Sum of Quantities by Product Category and Gender',
-                      polar=dict(radialaxis=dict(visible=True, range=[0, grouped_df['Qty'].max()], font_color='black')),
+                      polar=dict(radialaxis=dict(visible=True, range=[0, grouped_df['Qty'].max()],color='black')),
                       paper_bgcolor='black')
   
     # Display the radar chart

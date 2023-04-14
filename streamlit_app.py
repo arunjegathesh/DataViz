@@ -35,9 +35,6 @@ with header:
     st.subheader('Visualizing seasonal trends in average order value')
     st.markdown('---')
 
-# min_age = int(df['Age'].min())
-# max_age = 
-    
 with st.sidebar:
   
 #     def get_data():
@@ -73,18 +70,24 @@ total_customers = df['customer_Id'].nunique()
 with kpis:
     st.subheader('KPIs Section Analysis')
    
-    with col1:
-        st.header("Total Sales")
-        st.subheader(f"€{total_sales}")
+      with col1:
+          st.header("Total Sales")
+          st.subheader(f"€{total_sales}")
 
-    with col2:
-        st.header("Total Quantity")
-        st.subheader(f"{total_quantity}")
+      with col2:
+          st.header("Total Quantity")
+          st.subheader(f"{total_quantity}")
 
-    with col3:
-        st.header("Distinct # of Customers")
-        st.subheader(f"{total_customers}")
+      with col3:
+          st.header("Distinct # of Customers")
+          st.subheader(f"{total_customers}")
         
+    st.markdown('---')
+
+# Define the dashboard section
+with dashboard:
+    st.subheader('Dashboard')
+    st.write('This section provides an interactive dashboard to explore the data.')
     st.markdown('---')
 
 # with kpis:
@@ -150,8 +153,4 @@ with kpis:
 #     # Render the chart using Streamlit's Altair chart renderer
 #     st.altair_chart(aov_chart)
 
-# Define the dashboard section
-with dashboard:
-    st.subheader('Dashboard')
-    st.write('This section provides an interactive dashboard to explore the data.')
-    st.markdown('---')
+

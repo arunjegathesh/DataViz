@@ -13,6 +13,7 @@ kpis = st.container()
 analysis = st.container()
 dashboard = st.container()
 trend_line = st.container()
+bar_plot = st.container()
 
 @st.cache_data
 def get_data():
@@ -93,27 +94,32 @@ with trend_line:
         ).properties(
         width=1200,
         height=400, # Change the height as per your requirement
-        title='Seasonality of Average Order Value'
+        title='Seasonality of Average Order Value across Product Categories'
     )
 
     # Render the chart using Streamlit's Altair chart renderer
     st.altair_chart(aov_chart)
-
-#     # Create an Altair chart with a dropdown menu and a tooltip
-#     aov_chart = alt.Chart(aov_monthly).mark_line().encode(
-#         x='month:N',
-#         y=alt.Y('total_amt:Q', axis=alt.Axis(title='Total Sales (in €)')),
-#         color='prod_cat:N',
-#         tooltip=['prod_cat:N', 'month:N', 'total_amt:Q']
-#     ).properties(
-#         title='Seasonality of Total Sales'
-#     )
-    
-#     # Render the chart using Streamlit's Altair chart renderer
-#     st.altair_chart(aov_chart)
     
     st.markdown('---')
 
+    
+with bar_plot:  
+  
+    st.subheader('Trend Analysis of AoV')
+# Then, update the x and y encodings to use the lat and lon fields from your data
+    bar_chart = alt.Chart(filtered_data).mark_bar().encode(
+        x=alt.X('prod_subcat', sort='-y'),
+        y='total_amt:Q',
+        color='Gender:N',
+        tooltip=['prod_subcat:N', 'total_amt:N', 'Gender:N']).properties(
+        width=1200,
+        height=400, # Change the height as per your requirement
+        title='Spread of sales across Product Sub Categories')
+  
+    st.altair_chart(bar_chart)
+    
+    st.markdown('---')
+    
     
 #chart1,chart2 = st.columns(2)
 #    st.markdown('---')

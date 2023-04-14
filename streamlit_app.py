@@ -81,8 +81,8 @@ with kpis:
     with col3:
         st.header("Distinct # of Customers")
         st.subheader(f"{total_customers}")
-        
-    st.markdown('---')
+    
+    st.write('---')
 
 # Define the dashboard section
 # with dashboard:

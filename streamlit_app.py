@@ -3,7 +3,7 @@ import pandas as pd
 import sqlite3
 import altair as alt
 import pygal 
-import cairosvg
+#import cairosvg
 #from io import BytesIO
 #from streamlit_pygal import st_pygal
 
@@ -148,9 +148,8 @@ with spider_plot:
 #    st.pygal_chart(radar_chart)
  
     # Convert SVG chart to PNG
-    svg_chart = radar_chart.render()
-    png_chart = cairosvg.svg2png(bytestring=svg_chart)
-    
+    png_chart = radar_chart.render_to_png()
+        
     st.image(png_chart, format='PNG')
     
 #chart1,chart2 = st.columns(2)

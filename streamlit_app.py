@@ -49,7 +49,7 @@ with st.sidebar:
                                 default=df['city_code'].unique())
     
     year_select = st.radio(label= 'Select the required year (single select)',
-                                options=(df['year'].unique().sort_values()))
+                                options=np.sort(df['year'].unique()).tolist()))
     
     store_filter = st.multiselect(label= 'Select the store type',
                                 options=df['Store_type'].unique(),

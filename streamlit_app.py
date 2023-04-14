@@ -10,7 +10,6 @@ import plotly.express as px
 #from io import BytesIO
 #from streamlit_pygal import st_pygal
 
-
 st.set_page_config(page_title = 'Retail Sales Analysis',
                    layout='wide',
                    initial_sidebar_state='collapsed')

@@ -5,6 +5,7 @@ import altair as alt
 import pygal 
 import base64
 import numpy as np
+import plotly.express as px
 #import cairosvg
 #from io import BytesIO
 #from streamlit_pygal import st_pygal
@@ -62,6 +63,9 @@ with st.sidebar:
     # display the slider
     age_range = st.slider("Select age range", min_value=int(df['Age'].min()), max_value=int(df['Age'].max()), 
                           value=(int(df['Age'].min()), int(df['Age'].max())))
+    
+    # Add a dropdown menu to select the city
+    city_dropdown = st.selectbox('Select a city:', df['city_code'].unique())
 
 # filter the data based on the user selection
 filtered_data = df[(df['city_code'].isin(country_filter)) & 
@@ -140,6 +144,47 @@ with bar_plot:
     st.altair_chart(bar_chart)
     
     st.markdown('---')
+    
+import pandas as pd
+
+import streamlit as st
+
+# Load the data
+# df = pd.read_csv('sales.csv')
+
+# Define a function to update the radar chart when the city is changed
+def update_chart(city):
+    # Filter the dataframe by the selected city
+    filtered_df = df[df['city_code'] == city]
+
+    # Group the dataframe by 'prod_cat' and 'gender' and calculate the sum of 'Qty'
+    grouped_df = filtered_df.groupby(['prod_cat', 'Gender']).sum()
+
+    # Reset the index of the grouped dataframe
+    grouped_df = grouped_df.reset_index()
+
+    # Create a radar chart using Plotly Express
+    fig = px.line_polar(grouped_df, r='Qty', theta='prod_cat', color='Gender',
+                        line_close=True, template='plotly_white')
+
+    # Set the chart title and layout
+    fig.update_layout(title=f'Sum of Quantities by Product Category and Gender in {city}',
+                      polar=dict(radialaxis=dict(visible=True, range=[0, grouped_df['Qty'].max()])))
+
+    # Display the radar chart
+    st.plotly_chart(fig)
+
+# # Create a sidebar container for the city selection
+# with st.sidebar:
+#     # Add a dropdown menu to select the city
+#     city_dropdown = st.selectbox('Select a city:', df['city_code'].unique())
+
+# Add a button to update the chart when the city is changed
+if st.button('Update Chart'):
+    update_chart(city_dropdown)
+
+# # Display the initial radar chart
+# update_chart(df['city_code'].unique()[0])
     
 # def render_svg(svg):
 #     """Renders the given svg string."""

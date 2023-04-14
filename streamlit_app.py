@@ -40,9 +40,16 @@ with st.sidebar:
 
 #     df = get_data()
     
-    Campaign_filter = st.multiselect(label= 'Select the country',
+    country_filter = st.multiselect(label= 'Select the country',
                                 options=df['city_code'].unique(),
                                 default=df['city_code'].unique())
+    
+    year_select = st.selectbox(label= 'Select the required year (single select)',
+                                options=df['year'].unique())
+    
+    store_filter = st.multiselect(label= 'Select the store type',
+                                options=df['Store_type'].unique(),
+                                default=df['Store_type'].unique())
     
 # with kpis:
 #     st.subheader('KPIs Section Analysis')

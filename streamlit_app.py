@@ -74,8 +74,8 @@ with kpis:
     st.subheader('KPIs Section Analysis')
 
     col1.metric("Total Sales", f"€{filtered_sales:,.2f} / €{total_sales:,.2f}")
-    col2.metric("Total Quantity", f"{filtered_quantity:,.0f} / f"{total_quantity:,.0f}")
-    col3.metric("Distinct # of Customers", f"{filtered_customers:,.0f} / /f"{total_customers:,.0f}")
+    col2.metric("Total Quantity", f"{filtered_quantity:,.0f} / {total_quantity:,.0f}")
+    col3.metric("Distinct # of Customers", f"{filtered_customers:,.0f} / {total_customers:,.0f}")
 
 #    st.markdown('---')
 

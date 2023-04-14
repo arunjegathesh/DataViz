@@ -155,7 +155,7 @@ with map_plot:
   
     st.subheader('map chart bla bla')
 
-    geo_filtered = geo_df[geo_df['Year'] == 2013]
+    #geo_filtered = geo_df[geo_df['Year'] == 2013]
 
     # Define the mapbox style and center
     mapbox_style = "open-street-map"

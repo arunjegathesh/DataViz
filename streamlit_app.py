@@ -73,8 +73,21 @@ total_customers = df['customer_Id'].nunique()
 with kpis:
     st.subheader('KPIs Section Analysis')
 
+with col1:
+    with st.spinner('Calculating filtered sales...'):
+        filtered_sales = df[(df['city_code'].isin(country_filter)) & 
+                            (df['year'] == year_select) & 
+                            (df['Store_type'].isin(store_filter)) & 
+                            (df['Age'] >= age_range[0]) & 
+                            (df['Age'] <= age_range[1])]['total_amt'].sum()
+        total_sales = df['total_amt'].sum()
+        st.metric("Total Sales", f"€{filtered_sales/1000000:,.1f}M / €{total_sales/1000000:,.1f}M", 
+                  delta=f"+{((filtered_sales-total_sales)/total_sales)*100:.1f}%",
+                  delta_color="inverse")
+        st.markdown("<div style='font-size: small'>*Values in millions</div>", unsafe_allow_html=True)
+    
 #    col1.metric("Total Sales", f"€{filtered_sales:,.2f} / €{total_sales:,.2f}")
-    col1.metric("Total Sales", f"€ {filtered_sales/1000:,.1f}K / € {total_sales/1000:,.1f}K", style="font-size: 20px;")
+    #col1.metric("Total Sales", f"€ {filtered_sales/1000:,.1f}K / € {total_sales/1000:,.1f}K", style="font-size: 20px;")
     col2.metric("Total Quantity", f"{filtered_quantity:,.0f} / {total_quantity:,.0f}")
     col3.metric("Distinct # of Customers", f"{filtered_customers:,.0f} / {total_customers:,.0f}")
 

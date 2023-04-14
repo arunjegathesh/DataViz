@@ -132,32 +132,32 @@ with bar_plot:
     
     st.markdown('---')
     
-def render_svg(svg):
-    """Renders the given svg string."""
-    b64 = base64.b64encode(svg.encode('utf-8')).decode("utf-8")
-    html = r'<img src="data:image/svg+xml;base64,%s"/>' % b64
-    st.write(html, unsafe_allow_html=True)
+# def render_svg(svg):
+#     """Renders the given svg string."""
+#     b64 = base64.b64encode(svg.encode('utf-8')).decode("utf-8")
+#     html = r'<img src="data:image/svg+xml;base64,%s"/>' % b64
+#     st.write(html, unsafe_allow_html=True)
 
-with spider_plot:  
+# with spider_plot:  
   
-    st.subheader('With great power comes great responsibility')    
-    grouped_df = filtered_data.groupby(['prod_cat', 'Gender'])['Qty'].sum().reset_index()
+#     st.subheader('With great power comes great responsibility')    
+#     grouped_df = filtered_data.groupby(['prod_cat', 'Gender'])['Qty'].sum().reset_index()
 
-    # Reshape the dataframe to a wide format
-    pivoted_df = grouped_df.pivot_table(index='prod_cat', columns='Gender', values='Qty')
+#     # Reshape the dataframe to a wide format
+#     pivoted_df = grouped_df.pivot_table(index='prod_cat', columns='Gender', values='Qty')
     
-    radar_chart = pygal.Radar(show_legend=True, tooltip_border_radius=10, tooltip_font_size=15, style=pygal.style.LightGreenStyle)
-    radar_chart.title = f'Sum of Quantities by Product Category and Gender'
-    radar_chart.x_labels = pivoted_df.index.tolist()
-    radar_chart.add('Male', pivoted_df['M'].tolist())
-    radar_chart.add('Female', pivoted_df['F'].tolist())
+#     radar_chart = pygal.Radar(show_legend=True, tooltip_border_radius=10, tooltip_font_size=15, style=pygal.style.LightGreenStyle)
+#     radar_chart.title = f'Sum of Quantities by Product Category and Gender'
+#     radar_chart.x_labels = pivoted_df.index.tolist()
+#     radar_chart.add('Male', pivoted_df['M'].tolist())
+#     radar_chart.add('Female', pivoted_df['F'].tolist())
     
-#    st.pygal_chart(radar_chart)
+# #    st.pygal_chart(radar_chart)
  
-    chart = radar_chart.render()
-    # Convert SVG chart to PNG
-    st.write('### SVG Output')
-    render_svg(chart)
+#     chart = radar_chart.render()
+#     # Convert SVG chart to PNG
+#     st.write('### SVG Output')
+#     render_svg(chart)
     
 #chart1,chart2 = st.columns(2)
 #    st.markdown('---')

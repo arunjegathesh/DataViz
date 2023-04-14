@@ -91,7 +91,7 @@ with trend_line:
         color='prod_cat:N',
         tooltip=['prod_cat:N', 'month:N', 'AOV:Q']
         ).properties(
-        width=700,
+        width=1200,
         height=400, # Change the height as per your requirement
         title='Seasonality of Average Order Value'
     )

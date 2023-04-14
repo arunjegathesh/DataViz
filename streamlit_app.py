@@ -40,9 +40,8 @@ with st.sidebar:
 
 #     df = get_data()
     
-    Campaign_filter = st.multiselect(label= 'Select the country',
-                                options=df['city_code'].unique(),
-                                default=df['city_code'].unique())
+    Campaign_filter = st.selectbox(label= 'Select the country',
+                                options=df['city_code'].unique())
 
     
 # with kpis:

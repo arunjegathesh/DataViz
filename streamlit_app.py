@@ -73,7 +73,7 @@ total_customers = df['customer_Id'].nunique()
 with kpis:
     st.subheader('KPIs Section Analysis')
 
-    col1.metric("Total Sales", f"€ {filtered_sales/1000000:,.2f}M / € {total_sales/1000000:,.2f}M")
+    col1.metric("Total Sales", f"€ {filtered_sales/1000000:,.2f}M / € {total_sales/1000000:,.2f}M", style="font-size: smaller")
     col2.metric("Total Quantity", f"{filtered_quantity:,.0f} / {total_quantity:,.0f}")
     col3.metric("Distinct # of Customers", f"{filtered_customers:,.0f} / {total_customers:,.0f}")
 

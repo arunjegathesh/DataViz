@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import sqlite3
 import altair as alt
+import pygal 
 #from streamlit_pygal import st_pygal
 
 st.set_page_config(page_title = 'Retail Sales Analysis',

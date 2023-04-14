@@ -88,13 +88,13 @@ with trend_line:
     aov_monthly = filtered_data.groupby(['prod_cat', 'city_code', 'Store_type', 'year', 'Age', 'month'])['total_amt'].sum().reset_index()
     
     # Create an Altair chart with a dropdown menu and a tooltip
-    aov_chart = alt.Chart(aov_monthly).mark_line().encode(
+    aov_chart = alt.Chart(aov_monthly).mark_line(interpolate='basis').encode(
         x='month:N',
         y=alt.Y('total_amt:Q', axis=alt.Axis(title='Total Sales (in €)')),
         color='prod_cat:N',
         tooltip=['prod_cat:N', 'month:N', 'total_amt:Q']
         ).properties(
-        width='container',
+        width=700,
         height=400, # Change the height as per your requirement
         title='Seasonality of Total Sales'
     )

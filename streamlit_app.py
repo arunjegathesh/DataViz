@@ -84,6 +84,8 @@ with kpis:
     with col3:
         st.header("Distinct # of Customers")
         st.subheader(f"{total_customers}")
+        
+    st.markdown('---')
 
 # with kpis:
 #     st.subheader('KPIs Section Analysis')
@@ -148,8 +150,8 @@ with kpis:
 #     # Render the chart using Streamlit's Altair chart renderer
 #     st.altair_chart(aov_chart)
 
-# # Define the dashboard section
-# with dashboard:
-#     st.subheader('Dashboard')
-#     st.write('This section provides an interactive dashboard to explore the data.')
-#     st.markdown('---')
+# Define the dashboard section
+with dashboard:
+    st.subheader('Dashboard')
+    st.write('This section provides an interactive dashboard to explore the data.')
+    st.markdown('---')

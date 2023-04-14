@@ -35,8 +35,8 @@ with header:
     st.subheader('Visualizing seasonal trends in average order value')
     st.markdown('---')
 
-min_age = int(df['Age'].min())
-max_age = int(df['Age'].max())
+# min_age = int(df['Age'].min())
+# max_age = 
     
 with st.sidebar:
   
@@ -50,7 +50,7 @@ with st.sidebar:
                                 options=df['city_code'].unique(),
                                 default=df['city_code'].unique())
     
-    year_select = st.selectbox(label= 'Select the required year (single select)',
+    year_select = st.radio(label= 'Select the required year (single select)',
                                 options=df['year'].unique())
     
     store_filter = st.multiselect(label= 'Select the store type',
@@ -58,7 +58,8 @@ with st.sidebar:
                                 default=df['Store_type'].unique())
     
     # display the slider
-    age_range = st.slider("Select age range", min_value=min_age, max_value=max_age, value=(min_age, max_age))
+    age_range = st.slider("Select age range", min_value=int(df['Age'].min()), max_value=int(df['Age'].max()), 
+                          value=(int(df['Age'].min()), int(df['Age'].max())))
     
 # with kpis:
 #     st.subheader('KPIs Section Analysis')

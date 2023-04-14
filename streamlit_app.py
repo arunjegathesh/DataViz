@@ -22,6 +22,9 @@ def get_data():
     # Extract the year and month from the transaction date
     df['year'] = df['tran_date'].dt.year
     df['month'] = df['tran_date'].dt.month
+    
+    df['age'] = df['age'].astype(int)
+    
     return df
 
 df = get_data()

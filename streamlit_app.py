@@ -12,6 +12,7 @@ header = st.container()
 kpis = st.container()
 analysis = st.container()
 dashboard = st.container()
+trend_line = st.container()
 
 @st.cache_data
 def get_data():
@@ -76,7 +77,34 @@ with kpis:
     col1.metric("Total Sales", f"€ {filtered_sales/1000000:,.2f}M / € {total_sales/1000000:,.2f}M")
     col2.metric("Total Quantity", f"{filtered_quantity:,.0f} / {total_quantity:,.0f}")
     col3.metric("Distinct # of Customers", f"{filtered_customers:,.0f} / {total_customers:,.0f}")
+    
+    st.markdown('---')
 
+with trend_line:
+    st.subheader('Trend Analysis of AoV')
+  
+    # Calculate the AOV for each month
+    aov_monthly = filtered_df.groupby(['prod_cat', 'city_code', 'Store_type', 'year', 'Age', 'month']).mean().reset_index()
+
+    # Create a selection tool for the year
+#     year_select = alt.selection_single(
+#         name='Year',
+#         fields=['year'],
+#         bind=alt.binding_select(options=aov_monthly['year'].unique().tolist())
+#     )
+
+    # Create an Altair chart with a dropdown menu and a tooltip
+    aov_chart = alt.Chart(aov_monthly).mark_line().encode(
+        x='month:N',
+        y=alt.Y('AOV:Q', axis=alt.Axis(title='Average Order Value')),
+        color='prod_cat:N',
+        tooltip=['prod_cat:N', 'month:N', 'AOV:Q']
+    ).properties(
+        title='Seasonality of Average Order Value'
+    )
+
+    
+#chart1,chart2 = st.columns(2)
 #    st.markdown('---')
 
 # Define the dashboard section

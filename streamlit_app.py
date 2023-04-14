@@ -65,7 +65,7 @@ with st.sidebar:
 
     
 # filter the data based on the user selection
-filtered_data = df[(df['city_code'].isin(country_filter)) & (df['year']==year_select)) & (df['Gender']==gender_filter))
+filtered_data = df[(df['city_code'].isin(country_filter)) & (df['year']==year_select) & (df['Gender']==gender_filter) &
                    (df['Store_type'].isin(store_filter)) & (df['Age'].between(age_range[0], age_range[1]))]
 
 # calculate the KPI values for filtered data

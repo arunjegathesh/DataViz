@@ -60,7 +60,28 @@ with st.sidebar:
     # display the slider
     age_range = st.slider("Select age range", min_value=int(df['Age'].min()), max_value=int(df['Age'].max()), 
                           value=(int(df['Age'].min()), int(df['Age'].max())))
+
     
+col1, col2, col3 = st.columns(3)
+
+# calculate the KPI values
+total_sales = df['total_amt'].sum()
+total_quantity = df['Qty'].sum()
+total_customers = df['customer_Id'].nunique()
+
+# display the KPIs in the container
+with col1:
+    st.header("Total Sales")
+    st.subheader(f"€{total_sales}")
+
+with col2:
+    st.header("Total Quantity")
+    st.subheader(f"{total_quantity}")
+
+with col3:
+    st.header("Distinct # of Customers")
+    st.subheader(f"{total_customers}")
+
 # with kpis:
 #     st.subheader('KPIs Section Analysis')
 # #    st.write('This section provides a detailed analysis of the data.')

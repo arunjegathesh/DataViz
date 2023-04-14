@@ -84,14 +84,7 @@ with trend_line:
     st.subheader('Trend Analysis of AoV')
   
     # Calculate the AOV for each month
-    aov_monthly = filtered_df.groupby(['prod_cat', 'city_code', 'Store_type', 'year', 'Age', 'month']).mean().reset_index()
-
-    # Create a selection tool for the year
-#     year_select = alt.selection_single(
-#         name='Year',
-#         fields=['year'],
-#         bind=alt.binding_select(options=aov_monthly['year'].unique().tolist())
-#     )
+    aov_monthly = filtered_data.groupby(['prod_cat', 'city_code', 'Store_type', 'year', 'Age', 'month']).mean().reset_index()
 
     # Create an Altair chart with a dropdown menu and a tooltip
     aov_chart = alt.Chart(aov_monthly).mark_line().encode(

@@ -130,7 +130,7 @@ with bar_plot:
 with spider_plot:  
   
     st.subheader('With great power comes great responsibility')    
-    grouped_df = filtered_df.groupby(['prod_cat', 'Gender'])['Qty'].sum().reset_index()
+    grouped_df = filtered_data.groupby(['prod_cat', 'Gender'])['Qty'].sum().reset_index()
 
     # Reshape the dataframe to a wide format
     pivoted_df = grouped_df.pivot_table(index='prod_cat', columns='Gender', values='Qty')

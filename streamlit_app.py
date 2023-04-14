@@ -48,11 +48,15 @@ with st.sidebar:
                                 default=df['city_code'].unique())
     
     year_select = st.radio(label= 'Select the required year (single select)',
-                                options=df['year'].unique())
+                                options=np.sort(df['year'].unique()))
     
     store_filter = st.multiselect(label= 'Select the store type',
                                 options=df['Store_type'].unique(),
                                 default=df['Store_type'].unique())
+    
+    gender_filter = st.multiselect(label= 'Select the gender type',
+                                options=df['Gender'].unique(),
+                                default=df['Gender'].unique())
     
     # display the slider
     age_range = st.slider("Select age range", min_value=int(df['Age'].min()), max_value=int(df['Age'].max()), 
@@ -60,7 +64,7 @@ with st.sidebar:
 
     
 # filter the data based on the user selection
-filtered_data = df[(df['city_code'].isin(country_filter)) & (df['year']==year_select) & 
+filtered_data = df[(df['city_code'].isin(country_filter)) & (df['year']==year_select) & (df['Gender']==gender_filter) & 
                    (df['Store_type'].isin(store_filter)) & (df['Age'].between(age_range[0], age_range[1]))]
 
 # calculate the KPI values for filtered data
@@ -93,7 +97,7 @@ with trend_line:
     aov_monthly = filtered_data.groupby(['prod_cat', 'year', 'month'])['AOV'].mean().reset_index()
     
     # Create an Altair chart with a dropdown menu and a tooltip
-    aov_chart = alt.Chart(aov_monthly).mark_line(interpolate = 'basis').encode(
+    aov_chart = alt.Chart(aov_monthly).mark_line().encode(
         x=alt.X('month:N', sort=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']),
         y=alt.Y('AOV:Q', axis=alt.Axis(title='Average Order Value (in €)')),
         color='prod_cat:N',
@@ -110,13 +114,16 @@ with trend_line:
     st.markdown('---')
 
     
+bar_filtered = df[(df['city_code'].isin(country_filter)) & (df['year']==year_select) & 
+                   (df['Store_type'].isin(store_filter)) & (df['Age'].between(age_range[0], age_range[1]))]
+    
 with bar_plot:  
   
     st.subheader('Bar Chart bla bla')
 # Then, update the x and y encodings to use the lat and lon fields from your data
 
 # Group the data by prod_subcat and Gender and calculate the sum of total_amt for each group
-    sales_by_subcat = filtered_data.groupby(['prod_subcat', 'Gender'])['total_amt'].sum().reset_index()
+    sales_by_subcat = bar_filtered.groupby(['prod_subcat', 'Gender'])['total_amt'].sum().reset_index()
 
 
     bar_chart = alt.Chart(sales_by_subcat).mark_bar().encode(

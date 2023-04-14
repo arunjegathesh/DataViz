@@ -3,6 +3,7 @@ import pandas as pd
 import sqlite3
 import altair as alt
 import pygal 
+import base64
 #import cairosvg
 #from io import BytesIO
 #from streamlit_pygal import st_pygal

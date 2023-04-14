@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import sqlite3
 import altair as alt
+from streamlit_pygal import st_pygal
 
 st.set_page_config(page_title = 'Retail Sales Analysis',
                    layout='wide',
@@ -14,6 +15,7 @@ analysis = st.container()
 dashboard = st.container()
 trend_line = st.container()
 bar_plot = st.container()
+spider_plot = st.container()
 
 @st.cache_data
 def get_data():
@@ -125,6 +127,23 @@ with bar_plot:
     
     st.markdown('---')
     
+with spider_plot:  
+  
+    st.subheader('With great power comes great responsibility')    
+    grouped_df = filtered_df.groupby(['prod_cat', 'Gender'])['Qty'].sum().reset_index()
+
+    # Reshape the dataframe to a wide format
+    pivoted_df = grouped_df.pivot_table(index='prod_cat', columns='Gender', values='Qty')
+    
+    radar_chart = pygal.Radar(show_legend=True, tooltip_border_radius=10, tooltip_font_size=15, style=pygal.style.LightGreenStyle)
+    radar_chart.title = f'Sum of Quantities by Product Category and Gender'
+    radar_chart.x_labels = pivoted_df.index.tolist()
+    radar_chart.add('Male', pivoted_df['M'].tolist())
+    radar_chart.add('Female', pivoted_df['F'].tolist())
+    
+    st_pygal(radar_chart)
+    
+    st.markdown("---")
     
 #chart1,chart2 = st.columns(2)
 #    st.markdown('---')

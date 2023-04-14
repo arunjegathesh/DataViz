@@ -81,7 +81,7 @@ with col1:
                             (df['Age'] >= age_range[0]) & 
                             (df['Age'] <= age_range[1])]['total_amt'].sum()
         total_sales = df['total_amt'].sum()
-        st.metric("Total Sales", f"€{filtered_sales/1000000:,.1f}M / €{total_sales/1000000:,.1f}M", 
+        st.metric("Total Sales", f"€{filtered_sales/1000:,.1f}M / €{total_sales/1000:,.1f}M", 
                   delta=f"+{((filtered_sales-total_sales)/total_sales)*100:.1f}%",
                   delta_color="inverse")
         st.markdown("<div style='font-size: small'>*Values in millions</div>", unsafe_allow_html=True)

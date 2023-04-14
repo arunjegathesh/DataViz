@@ -23,7 +23,7 @@ def get_data():
     df['year'] = df['tran_date'].dt.year
     df['month'] = df['tran_date'].dt.month
     
-    df['Age'] = df['Age'].astype(int)
+   # df['Age'] = df['Age'].astype(int)
     
     return df
 
@@ -35,6 +35,9 @@ with header:
     st.subheader('Visualizing seasonal trends in average order value')
     st.markdown('---')
 
+min_age = int(df['Age'].min())
+max_age = int(df['Age'].max())
+    
 with st.sidebar:
   
 #     def get_data():
@@ -54,10 +57,8 @@ with st.sidebar:
                                 options=df['Store_type'].unique(),
                                 default=df['Store_type'].unique())
     
-    age_range = st.slider(label='Select age range',
-                          min_value=df['Age'].min(),
-                          max_value=df['Age'].max(),
-                          value=(df['Age'].min(), df['Age'].max()))
+    # display the slider
+    age_range = st.slider("Select age range", min_value=min_age, max_value=max_age, value=(min_age, max_age))
     
 # with kpis:
 #     st.subheader('KPIs Section Analysis')

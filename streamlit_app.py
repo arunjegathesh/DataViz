@@ -55,9 +55,9 @@ with st.sidebar:
                                 options=df['Store_type'].unique(),
                                 default=df['Store_type'].unique())
     
-    gender_filter = st.multiselect(label= 'Select the gender type',
-                                options=df['Gender'].unique(),
-                                default=df['Gender'].unique())
+#     gender_filter = st.multiselect(label= 'Select the gender type',
+#                                 options=df['Gender'].unique(),
+#                                 default=df['Gender'].unique())
     
     # display the slider
     age_range = st.slider("Select age range", min_value=int(df['Age'].min()), max_value=int(df['Age'].max()), 
@@ -66,7 +66,7 @@ with st.sidebar:
 # filter the data based on the user selection
 filtered_data = df[(df['city_code'].isin(country_filter)) & 
                    (df['year']==year_select) & 
-                   (df['Gender'] == gender_filter[0]) &
+#                  (df['Gender'] == gender_filter[0]) &
                    (df['Store_type'].isin(store_filter)) & (df['Age'].between(age_range[0], age_range[1]))]
 
 # calculate the KPI values for filtered data

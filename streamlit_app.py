@@ -49,7 +49,7 @@ with st.sidebar:
                                 default=df['city_code'].unique())
     
     year_select = st.radio(label= 'Select the required year (single select)',
-                                options=np.sort(df['year'].unique()))
+                                options=(df['year'].unique().sort_values()))
     
     store_filter = st.multiselect(label= 'Select the store type',
                                 options=df['Store_type'].unique(),
@@ -63,10 +63,8 @@ with st.sidebar:
     age_range = st.slider("Select age range", min_value=int(df['Age'].min()), max_value=int(df['Age'].max()), 
                           value=(int(df['Age'].min()), int(df['Age'].max())))
 
-year_select_series = pd.Series(year_select)
-
 # filter the data based on the user selection
-filtered_data = df[(df['city_code'].isin(country_filter)) & (df['year']==year_select_series) & (df['Gender']==gender_filter) &
+filtered_data = df[(df['city_code'].isin(country_filter)) & (df['year']==year_select) & (df['Gender']==gender_filter) &
                    (df['Store_type'].isin(store_filter)) & (df['Age'].between(age_range[0], age_range[1]))]
 
 # calculate the KPI values for filtered data
@@ -116,7 +114,7 @@ with trend_line:
     st.markdown('---')
 
     
-bar_filtered = df[(df['city_code'].isin(country_filter)) & (df['year']==year_select_series) & 
+bar_filtered = df[(df['city_code'].isin(country_filter)) & (df['year']==year_select) & 
                    (df['Store_type'].isin(store_filter)) & (df['Age'].between(age_range[0], age_range[1]))]
     
 with bar_plot:  

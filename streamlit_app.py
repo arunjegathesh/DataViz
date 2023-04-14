@@ -88,7 +88,7 @@ with trend_line:
     aov_monthly = filtered_data.groupby(['prod_cat', 'year', 'month'])['AOV'].mean().reset_index()
     
     # Create an Altair chart with a dropdown menu and a tooltip
-    aov_chart = alt.Chart(aov_monthly).mark_line().encode(
+    aov_chart = alt.Chart(aov_monthly).mark_line(interpolate = 'basis').encode(
         x='month:N',
         y=alt.Y('AOV:Q', axis=alt.Axis(title='Average Order Value (in €)')),
         color='prod_cat:N',

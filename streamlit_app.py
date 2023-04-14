@@ -69,20 +69,29 @@ total_customers = df['customer_Id'].nunique()
 # display the KPIs in the container
 with kpis:
     st.subheader('KPIs Section Analysis')
+
+    col1.metric("Total Sales", f"€{total_sales:,.2f}")
+    col2.metric("Total Quantity", f"{total_quantity:,.0f}")
+    col3.metric("Distinct # of Customers", f"{total_customers:,.0f}")
+
+    st.markdown('---')
+
+# with kpis:
+#     st.subheader('KPIs Section Analysis')
    
-    with col1:
-        st.header("Total Sales")
-        st.subheader(f"€{total_sales}")
+#     with col1:
+#         st.header("Total Sales")
+#         st.subheader(f"€{total_sales}")
 
-    with col2:
-        st.header("Total Quantity")
-        st.subheader(f"{total_quantity}")
+#     with col2:
+#         st.header("Total Quantity")
+#         st.subheader(f"{total_quantity}")
 
-    with col3:
-        st.header("Distinct # of Customers")
-        st.subheader(f"{total_customers}")
+#     with col3:
+#         st.header("Distinct # of Customers")
+#         st.subheader(f"{total_customers}")
     
-    #st.write('---')
+#     #st.write('---')
 
 # Define the dashboard section
 # with dashboard:

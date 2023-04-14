@@ -131,6 +131,12 @@ with bar_plot:
     
     st.markdown('---')
     
+def render_svg(svg):
+    """Renders the given svg string."""
+    b64 = base64.b64encode(svg.encode('utf-8')).decode("utf-8")
+    html = r'<img src="data:image/svg+xml;base64,%s"/>' % b64
+    st.write(html, unsafe_allow_html=True)
+
 with spider_plot:  
   
     st.subheader('With great power comes great responsibility')    
@@ -147,10 +153,10 @@ with spider_plot:
     
 #    st.pygal_chart(radar_chart)
  
+    chart = radar_chart.render()
     # Convert SVG chart to PNG
-    png_chart = radar_chart.render_to_png()
-        
-    st.image(png_chart, format='PNG')
+    st.write('### SVG Output')
+    render_svg(chart)
     
 #chart1,chart2 = st.columns(2)
 #    st.markdown('---')

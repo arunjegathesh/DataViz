@@ -216,5 +216,3 @@ with spider_plot:
 
 #     # Render the chart using Streamlit's Altair chart renderer
 #     st.altair_chart(aov_chart)
-
-

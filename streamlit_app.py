@@ -142,8 +142,7 @@ with spider_plot:
     radar_chart.add('Male', pivoted_df['M'].tolist())
     radar_chart.add('Female', pivoted_df['F'].tolist())
     
-    spider_chart = radar_chart.render()
-    st.image(spider_chart, format='svg')
+    st.pygal_chart(radar_chart)
     
     st.markdown("---")
     

@@ -36,12 +36,6 @@ with header:
     st.markdown('---')
 
 with st.sidebar:
-  
-#     def get_data():
-#     df = pd.read_csv('clean_data.csv')  
-#     return df
-
-#     df = get_data()
     
     country_filter = st.multiselect(label= 'Select the country',
                                 options=df['city_code'].unique(),
@@ -59,6 +53,15 @@ with st.sidebar:
                           value=(int(df['Age'].min()), int(df['Age'].max())))
 
     
+# filter the data based on the user selection
+filtered_data = df[(df['city_code'].isin(country_filter)) & (df['year']==year_select) & 
+                   (df['Store_type'].isin(store_filter)) & (df['Age'].between(age_range[0], age_range[1]))]
+
+# calculate the KPI values for filtered data
+filtered_sales = filtered_data['total_amt'].sum()
+filtered_quantity = filtered_data['Qty'].sum()
+filtered_customers = filtered_data['customer_Id'].nunique()
+    
 col1, col2, col3 = st.columns(3)
 
 # calculate the KPI values
@@ -70,28 +73,11 @@ total_customers = df['customer_Id'].nunique()
 with kpis:
     st.subheader('KPIs Section Analysis')
 
-    col1.metric("Total Sales", f"€{total_sales:,.2f}")
-    col2.metric("Total Quantity", f"{total_quantity:,.0f}")
-    col3.metric("Distinct # of Customers", f"{total_customers:,.0f}")
+    col1.metric("Total Sales", f"€{filtered_sales:,.2f} / €{total_sales:,.2f}")
+    col2.metric("Total Quantity", f"{filtered_quantity:,.0f} / f"{total_quantity:,.0f}")
+    col3.metric("Distinct # of Customers", f"{filtered_customers:,.0f} / /f"{total_customers:,.0f}")
 
-    st.markdown('---')
-
-# with kpis:
-#     st.subheader('KPIs Section Analysis')
-   
-#     with col1:
-#         st.header("Total Sales")
-#         st.subheader(f"€{total_sales}")
-
-#     with col2:
-#         st.header("Total Quantity")
-#         st.subheader(f"{total_quantity}")
-
-#     with col3:
-#         st.header("Distinct # of Customers")
-#         st.subheader(f"{total_customers}")
-    
-#     #st.write('---')
+#    st.markdown('---')
 
 # Define the dashboard section
 # with dashboard:

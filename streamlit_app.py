@@ -6,6 +6,7 @@ import pygal
 import base64
 import numpy as np
 import plotly.express as px
+import geopandas as gpd
 
 st.set_page_config(page_title = 'Retail Sales Analysis',
                    layout='wide',
@@ -17,14 +18,14 @@ kpis = st.container()
 trend_line = st.container()
 bar_plot = st.container()
 spider_plot = st.container()
+map_plot = st.container()
 
 @st.cache_data
 def get_data():
     df = pd.read_csv('clean_data.csv')
-    # Convert the transaction date column to datetime format
+    
     df['tran_date'] = pd.to_datetime(df['tran_date'])
 
-    # Extract the year and month from the transaction date
     df['year'] = df['tran_date'].dt.year
     df['month'] = df['tran_date'].dt.strftime('%b')    
     return df
@@ -49,12 +50,7 @@ with st.sidebar:
     store_filter = st.multiselect(label= 'Select the store type',
                                 options=df['Store_type'].unique(),
                                 default=df['Store_type'].unique())
-    
-#     gender_filter = st.multiselect(label= 'Select the gender type',
-#                                 options=df['Gender'].unique(),
-#                                 default=df['Gender'].unique())
-    
-    # display the slider
+
     age_range = st.slider("Select age range", min_value=int(df['Age'].min()), max_value=int(df['Age'].max()), 
                           value=(int(df['Age'].min()), int(df['Age'].max())))
 
@@ -90,10 +86,8 @@ with trend_line:
   
     st.subheader('Trend Analysis of AoV')
   
-    # Calculate the AOV for each month
     aov_monthly = filtered_data.groupby(['prod_cat', 'year', 'month'])['AOV'].mean().reset_index()
     
-    # Create an Altair chart with a dropdown menu and a tooltip
     aov_chart = alt.Chart(aov_monthly).mark_line().encode(
         x=alt.X('month:N', sort=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']),
         y=alt.Y('AOV:Q', axis=alt.Axis(title='Average Order Value (in €)')),
@@ -109,10 +103,6 @@ with trend_line:
     st.altair_chart(aov_chart)
     
     st.markdown('---')
-
-    
-# bar_filtered = df[(df['city_code'].isin(country_filter)) & (df['year']==year_select) & 
-#                    (df['Store_type'].isin(store_filter)) & (df['Age'].between(age_range[0], age_range[1]))]
     
 with bar_plot:  
   
@@ -128,7 +118,7 @@ with bar_plot:
         width=1200,
         height=400, # Change the height as per your requirement
         title='Spread of sales across Product Sub Categories')
-  
+    
     st.altair_chart(bar_chart)
     
     st.markdown('---')
@@ -141,16 +131,54 @@ with spider_plot:
     fig = px.line_polar(grouped_df, r='Qty', theta='prod_cat', color='Gender',
                         line_close=True, template='plotly_white')
 
-#     # Set the chart title and layout
-#     fig.update_layout(title=f'Sum of Quantities by Product Category and Gender',
-#                       polar=dict(radialaxis=dict(visible=True, range=[0, grouped_df['Qty'].max()])))
-
     fig.update_layout(title=f'Sum of Quantities by Product Category and Gender',
                       polar=dict(radialaxis=dict(visible=True, range=[0, grouped_df['Qty'].max()],color='black')),
                       paper_bgcolor='black')
   
     # Display the radar chart
     st.plotly_chart(fig)
+    
+    st.markdown('---')
+    
+def get_geo_data():
+    df = pd.read_csv('merged_gdf.csv')
+    
+#     df['tran_date'] = pd.to_datetime(df['tran_date'])
+
+#     df['year'] = df['tran_date'].dt.year
+#     df['month'] = df['tran_date'].dt.strftime('%b')    
+    return df
+
+geo_df = get_geo_data()
+
+with map_plot:  
+  
+    st.subheader('map chart bla bla')
+
+    geo_filtered = geo_df[geo_df['Year'] == year_select]
+
+    # Define the mapbox style and center
+    mapbox_style = "open-street-map"
+    mapbox_center = {"lat": 46.2276, "lon": 2.2137}
+
+    # Define the bounds for Europe
+    bounds = [[-27.070207, -34.276938], [75.0599, 60.238064]]
+
+# Create a choropleth map with Plotly
+    fig = px.choropleth_mapbox(geo_filtered,
+                           geojson=geo_filtered.geometry,
+                           locations=geo_filtered.index,
+                           color='Transaction Count',
+                           color_continuous_scale='blues',
+                           mapbox_style=mapbox_style,
+                           zoom=3, center=mapbox_center,
+                           hover_name='city_code',
+                           hover_data={'Transaction Count': True})
+
+    st.plotly_chart(fig)
+    
+    st.markdown('---')
+
 
 # # Create a sidebar container for the city selection
 # with st.sidebar:

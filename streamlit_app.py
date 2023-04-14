@@ -105,7 +105,7 @@ with trend_line:
     
 with bar_plot:  
   
-    st.subheader('Trend Analysis of AoV')
+    st.subheader('Bar Chart bla bla')
 # Then, update the x and y encodings to use the lat and lon fields from your data
     bar_chart = alt.Chart(filtered_data).mark_bar().encode(
         x=alt.X('prod_subcat', sort='-y'),

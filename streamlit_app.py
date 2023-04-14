@@ -52,9 +52,9 @@ with st.sidebar:
                                 default=df['Store_type'].unique())
     
     age_range = st.slider(label='Select age range',
-                          min_value=df['age'].min(),
-                          max_value=df['age'].max(),
-                          value=(df['age'].min(), df['age'].max()))
+                          min_value=df['Age'].min(),
+                          max_value=df['Age'].max(),
+                          value=(df['Age'].min(), df['Age'].max()))
     
 # with kpis:
 #     st.subheader('KPIs Section Analysis')

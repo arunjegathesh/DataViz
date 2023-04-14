@@ -23,7 +23,7 @@ def get_data():
     df['year'] = df['tran_date'].dt.year
     df['month'] = df['tran_date'].dt.month
     
-    df['age'] = df['age'].astype(int)
+    df['Age'] = df['Age'].astype(int)
     
     return df
 

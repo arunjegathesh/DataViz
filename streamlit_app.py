@@ -60,7 +60,7 @@ filtered_sales = filtered_data['total_amt'].sum()
 filtered_quantity = filtered_data['Qty'].sum()
 filtered_customers = filtered_data['customer_Id'].nunique()
     
-col1, col2, col3 = st.columns(3)
+#col1, col2, col3 = st.columns(3)
 
 # calculate the KPI values
 total_sales = df['total_amt'].sum()
@@ -70,10 +70,12 @@ total_customers = df['customer_Id'].nunique()
 # display the KPIs in the container
 with kpis:
     st.subheader('KPIs Section Analysis')
+    col1, col2, col3 = st.columns(3)
+    
     col1.metric("Total Sales", f"€ {filtered_sales/1000000:,.2f}M / € {total_sales/1000000:,.2f}M")
     col2.metric("Total Quantity", f"{filtered_quantity:,.0f} / {total_quantity:,.0f}")
     col3.metric("Distinct # of Customers", f"{filtered_customers:,.0f} / {total_customers:,.0f}")
-    #st.markdown('---')
+    st.markdown('---')
 
 with trend_line:  
   

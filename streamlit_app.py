@@ -95,6 +95,11 @@ with trend_line:
     ).properties(
         title='Seasonality of Average Order Value'
     )
+    
+    # Render the chart using Streamlit's Altair chart renderer
+    st.altair_chart(aov_chart)
+    
+    st.markdown('---')
 
     
 #chart1,chart2 = st.columns(2)

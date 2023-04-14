@@ -70,17 +70,20 @@ total_quantity = df['Qty'].sum()
 total_customers = df['customer_Id'].nunique()
 
 # display the KPIs in the container
-with col1:
-    st.header("Total Sales")
-    st.subheader(f"€{total_sales}")
+with kpis:
+    st.subheader('KPIs Section Analysis')
+   
+    with col1:
+        st.header("Total Sales")
+        st.subheader(f"€{total_sales}")
 
-with col2:
-    st.header("Total Quantity")
-    st.subheader(f"{total_quantity}")
+    with col2:
+        st.header("Total Quantity")
+        st.subheader(f"{total_quantity}")
 
-with col3:
-    st.header("Distinct # of Customers")
-    st.subheader(f"{total_customers}")
+    with col3:
+        st.header("Distinct # of Customers")
+        st.subheader(f"{total_customers}")
 
 # with kpis:
 #     st.subheader('KPIs Section Analysis')
@@ -145,8 +148,8 @@ with col3:
 #     # Render the chart using Streamlit's Altair chart renderer
 #     st.altair_chart(aov_chart)
 
-# Define the dashboard section
-with dashboard:
-    st.subheader('Dashboard')
-    st.write('This section provides an interactive dashboard to explore the data.')
-    st.markdown('---')
+# # Define the dashboard section
+# with dashboard:
+#     st.subheader('Dashboard')
+#     st.write('This section provides an interactive dashboard to explore the data.')
+#     st.markdown('---')

@@ -82,7 +82,7 @@ with kpis:
         st.header("Distinct # of Customers")
         st.subheader(f"{total_customers}")
     
-    st.write('---')
+    #st.write('---')
 
 # Define the dashboard section
 # with dashboard:

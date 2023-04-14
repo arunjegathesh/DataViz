@@ -3,6 +3,8 @@ import pandas as pd
 import sqlite3
 import altair as alt
 import pygal 
+import cairosvg
+#from io import BytesIO
 #from streamlit_pygal import st_pygal
 
 st.set_page_config(page_title = 'Retail Sales Analysis',
@@ -144,9 +146,11 @@ with spider_plot:
     
 #    st.pygal_chart(radar_chart)
  
-    svg = radar_chart.render()
-    st.image(svg2png(bytestring=svg), format='PNG')
-    st.markdown("---")
+    # Convert SVG chart to PNG
+    svg_chart = radar_chart.render()
+    png_chart = cairosvg.svg2png(bytestring=svg_chart)
+    
+    st.image(png_chart, format='PNG')
     
 #chart1,chart2 = st.columns(2)
 #    st.markdown('---')

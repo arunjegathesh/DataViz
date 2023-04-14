@@ -6,9 +6,6 @@ import pygal
 import base64
 import numpy as np
 import plotly.express as px
-#import cairosvg
-#from io import BytesIO
-#from streamlit_pygal import st_pygal
 
 st.set_page_config(page_title = 'Retail Sales Analysis',
                    layout='wide',
@@ -17,8 +14,6 @@ st.set_page_config(page_title = 'Retail Sales Analysis',
 # Define the containers
 header = st.container()
 kpis = st.container()
-analysis = st.container()
-dashboard = st.container()
 trend_line = st.container()
 bar_plot = st.container()
 spider_plot = st.container()
@@ -62,9 +57,6 @@ with st.sidebar:
     # display the slider
     age_range = st.slider("Select age range", min_value=int(df['Age'].min()), max_value=int(df['Age'].max()), 
                           value=(int(df['Age'].min()), int(df['Age'].max())))
-    
-    # Add a dropdown menu to select the city
-    city_dropdown = st.selectbox('Select a city:', df['city_code'].unique())
 
 # filter the data based on the user selection
 filtered_data = df[(df['city_code'].isin(country_filter)) & 
@@ -119,17 +111,14 @@ with trend_line:
     st.markdown('---')
 
     
-bar_filtered = df[(df['city_code'].isin(country_filter)) & (df['year']==year_select) & 
-                   (df['Store_type'].isin(store_filter)) & (df['Age'].between(age_range[0], age_range[1]))]
+# bar_filtered = df[(df['city_code'].isin(country_filter)) & (df['year']==year_select) & 
+#                    (df['Store_type'].isin(store_filter)) & (df['Age'].between(age_range[0], age_range[1]))]
     
 with bar_plot:  
   
     st.subheader('Bar Chart bla bla')
-# Then, update the x and y encodings to use the lat and lon fields from your data
 
-# Group the data by prod_subcat and Gender and calculate the sum of total_amt for each group
-    sales_by_subcat = bar_filtered.groupby(['prod_subcat', 'Gender'])['total_amt'].sum().reset_index()
-
+    sales_by_subcat = filtered_data.groupby(['prod_subcat', 'Gender'])['total_amt'].sum().reset_index()
 
     bar_chart = alt.Chart(sales_by_subcat).mark_bar().encode(
         x=alt.X('prod_subcat', sort='-y'),
@@ -144,9 +133,6 @@ with bar_plot:
     
     st.markdown('---')
 
-# Load the data
-# df = pd.read_csv('sales.csv')
-
 with spider_plot:
 
     grouped_df = filtered_data.groupby(['prod_cat', 'Gender']).sum().reset_index()
@@ -155,10 +141,15 @@ with spider_plot:
     fig = px.line_polar(grouped_df, r='Qty', theta='prod_cat', color='Gender',
                         line_close=True, template='plotly_white')
 
-    # Set the chart title and layout
-    fig.update_layout(title=f'Sum of Quantities by Product Category and Gender',
-                      polar=dict(radialaxis=dict(visible=True, range=[0, grouped_df['Qty'].max()])))
+#     # Set the chart title and layout
+#     fig.update_layout(title=f'Sum of Quantities by Product Category and Gender',
+#                       polar=dict(radialaxis=dict(visible=True, range=[0, grouped_df['Qty'].max()])))
 
+    fig.update_layout(title=f'Sum of Quantities by Product Category and Gender',
+                      polar=dict(radialaxis=dict(visible=True, range=[0, grouped_df['Qty'].max()])),
+                      plot_bgcolor='black',
+                      paper_bgcolor='black')
+  
     # Display the radar chart
     st.plotly_chart(fig)
 

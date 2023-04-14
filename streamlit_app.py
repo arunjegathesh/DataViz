@@ -84,16 +84,16 @@ with trend_line:
     st.subheader('Trend Analysis of AoV')
   
     # Calculate the AOV for each month
-    aov_monthly = filtered_data.groupby(['prod_cat', 'city_code', 'Store_type', 'year', 'Age', 'month'])['AOV'].mean().reset_index()
+    aov_monthly = filtered_data.groupby(['prod_cat', 'city_code', 'Store_type', 'year', 'Age', 'month'])['total_amt'].sum().reset_index()
 
     # Create an Altair chart with a dropdown menu and a tooltip
     aov_chart = alt.Chart(aov_monthly).mark_line().encode(
         x='month:N',
-        y=alt.Y('AOV:Q', axis=alt.Axis(title='Average Order Value')),
+        y=alt.Y('total_amt:Q', axis=alt.Axis(title='Total Sales (in €)')),
         color='prod_cat:N',
-        tooltip=['prod_cat:N', 'month:N', 'AOV:Q']
+        tooltip=['prod_cat:N', 'month:N', 'total_amt:Q']
     ).properties(
-        title='Seasonality of Average Order Value'
+        title='Seasonality of Total Sales'
     )
     
     # Render the chart using Streamlit's Altair chart renderer

@@ -107,7 +107,12 @@ with bar_plot:
   
     st.subheader('Bar Chart bla bla')
 # Then, update the x and y encodings to use the lat and lon fields from your data
-    bar_chart = alt.Chart(filtered_data).mark_bar().encode(
+
+# Group the data by prod_subcat and Gender and calculate the sum of total_amt for each group
+    sales_by_subcat = filtered_data.groupby(['prod_subcat', 'Gender'])['total_amt'].sum().reset_index()
+
+
+    bar_chart = alt.Chart(sales_by_subcat).mark_bar().encode(
         x=alt.X('prod_subcat', sort='-y'),
         y='total_amt:Q',
         color='Gender:N',

@@ -97,7 +97,7 @@ with trend_line:
         width=1200,
         height=400, # Change the height as per your requirement
         title='Seasonality of Average Order Value across Product Categories'
-    )
+    ).interactive()
 
     # Render the chart using Streamlit's Altair chart renderer
     st.altair_chart(aov_chart)
@@ -117,7 +117,7 @@ with bar_plot:
         tooltip=['prod_subcat:N', 'total_amt:N', 'Gender:N']).properties(
         width=1200,
         height=400, # Change the height as per your requirement
-        title='Spread of sales across Product Sub Categories')
+        title='Spread of sales across Product Sub Categories').interactive()
     
     st.altair_chart(bar_chart)
     

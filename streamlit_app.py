@@ -88,15 +88,14 @@ with trend_line:
   
     aov_monthly = filtered_data.groupby(['prod_cat', 'year', 'month'])['AOV'].mean().reset_index()
     
-    tooltip = ['prod_cat:N', 'month:N', 'AOV:Q']
-    new_labels = {'prod_cat': 'Product Category', 'month': 'Month', 'AOV': 'Average Order Value'}
+#     tooltip = ['prod_cat:N (Product Category)', 'month:N (Month)', 'AOV:Q (Average Order Value)']
+#     new_labels = {'prod_cat': 'Product Category', 'month': 'Month', 'AOV': 'Average Order Value'}
 
     aov_chart = alt.Chart(aov_monthly).mark_line().encode(
         x=alt.X('month:N', sort=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']),
         y=alt.Y('AOV:Q', axis=alt.Axis(title='Average Order Value (in €)')),
         color='prod_cat:N',
-        tooltip=[alt.Tooltip(field=field, type=type_, title=new_labels.get(field, field))
-             for field, type_ in [item.split(':') for item in tooltip]]
+        tooltip= ['prod_cat:N (Product Category)', 'month:N (Month)', 'AOV:Q (Average Order Value)']
         ).properties(
         width=1200,
         height=400, # Change the height as per your requirement

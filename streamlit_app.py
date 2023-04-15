@@ -277,8 +277,11 @@ with map_plot:
                              mapbox_style=mapbox_style,
                              zoom=3, center=mapbox_center,
                              hover_name='city_code',
-                             hover_data={'Total Revenue (€)': True})
-
+#                             hover_data={'Total Revenue (€)': True})
+                             hover_data={'Total Revenue (€)': ':,.3r K'})
+    
+      fig.update_traces(hovertemplate='Total Revenue (€): %{hovertext}<extra></extra>')
+      
       st.plotly_chart(fig, use_container_width=True, height=1000)
 
       st.markdown('---')

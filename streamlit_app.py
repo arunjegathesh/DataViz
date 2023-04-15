@@ -281,7 +281,7 @@ with map_plot:
 
       st.plotly_chart(fig, width=1200, height=600)
 
-    st.markdown('---')
+      st.markdown('---')
 
 
 # # Create a sidebar container for the city selection

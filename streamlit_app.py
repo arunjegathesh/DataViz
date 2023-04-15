@@ -78,12 +78,21 @@ with kpis:
     col1, col2, col3 = st.columns(3)
     
     with col1:
-      st.image('flaticons/money-bag.png',use_column_width='Auto', width=200)
+      st.image('flaticons/money-bag.png',use_column_width='True', width=150)
       #st.metric(label = 'Total Impressions', value= numerize(total_impressions))
       st.metric("Total Sales", f"€ {filtered_sales/1000000:,.2f}M / € {total_sales/1000000:,.2f}M")
     
-    col2.metric("Total Quantity", f"{filtered_quantity:,.0f} / {total_quantity:,.0f}")
-    col3.metric("Distinct # of Customers", f"{filtered_customers:,.0f} / {total_customers:,.0f}")
+    with col2:
+      st.image('flaticons/shopping-cart.png',use_column_width='True', width=150)
+      #st.metric(label = 'Total Impressions', value= numerize(total_impressions))
+      st.metric("Total Quantity", f"{filtered_quantity:,.0f} / {total_quantity:,.0f}")
+      
+    with col3:
+      st.image('flaticons/people.png',use_column_width='True', width=150)
+      #st.metric(label = 'Total Impressions', value= numerize(total_impressions))
+      st.metric("Distinct # of Customers", f"{filtered_customers:,.0f} / {total_customers:,.0f}")
+    
+    #col3.metric("Distinct # of Customers", f"{filtered_customers:,.0f} / {total_customers:,.0f}")
     st.markdown('---')
 
 with trend_line:  

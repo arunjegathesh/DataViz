@@ -84,7 +84,7 @@ with kpis:
 
 with trend_line:  
   
-    st.subheader('Trend Analysis of AoV')
+    st.subheader('Trend Anal of AoV')
   
     aov_monthly = filtered_data.groupby(['prod_cat', 'year', 'month'])['AOV'].mean().reset_index()
     

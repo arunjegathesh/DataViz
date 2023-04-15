@@ -205,7 +205,7 @@ with spider_plot:
 
     # Create a radar chart using Plotly Express
     fig = px.line_polar(grouped_df, r='Qty', theta='prod_cat', color='Gender',
-                        line_close=True, template='plotly_white', hover_data={'prod_cat': 'Product Category', 'Qty': 'Quantity'}, line_color='black')
+                        line_close=True, template='plotly_white', line_color='black')
 
     fig.update_layout(#title=f'Sum of Quantities by Product Category and Gender',
                       polar=dict(radialaxis=dict(visible=True, range=[0, grouped_df['Qty'].max()],color='black')))

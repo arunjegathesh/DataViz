@@ -252,35 +252,35 @@ merged_gdf = regions_gdf.merge(city_counts, on='city_code', how='left')
 merged_gdf.dropna(subset=['Transaction Count'], inplace=True)
 
 with map_plot:  
-  
-    st.subheader('map chart bla bla')
 
-    #geo_filtered = merged_gdf[merged_gdf['year'] == year_select]
-    
-    #geo_filtered = geo_df
-    
-    geo_filtered = merged_gdf
+      st.subheader('map chart bla bla')
 
-    # Define the mapbox style and center
-    mapbox_style = "open-street-map"
-    mapbox_center = {"lat": 46.2276, "lon": 2.2137}
+      #geo_filtered = merged_gdf[merged_gdf['year'] == year_select]
 
-    # Define the bounds for Europe
-    bounds = [[-27.070207, -34.276938], [75.0599, 60.238064]]
+      #geo_filtered = geo_df
 
-# Create a choropleth map with Plotly
-    fig = px.choropleth_mapbox(geo_filtered,
-                           geojson=geo_filtered.geometry,
-                           locations=geo_filtered.index,
-                           color='Transaction Count',
-                           color_continuous_scale='blues',
-                           mapbox_style=mapbox_style,
-                           zoom=3, center=mapbox_center,
-                           hover_name='city_code',
-                           hover_data={'Transaction Count': True})
+      geo_filtered = merged_gdf
 
-    st.plotly_chart(fig)
-    
+      # Define the mapbox style and center
+      mapbox_style = "open-street-map"
+      mapbox_center = {"lat": 46.2276, "lon": 2.2137}
+
+      # Define the bounds for Europe
+      bounds = [[-27.070207, -34.276938], [75.0599, 60.238064]]
+
+  # Create a choropleth map with Plotly
+      fig = px.choropleth_mapbox(geo_filtered,
+                             geojson=geo_filtered.geometry,
+                             locations=geo_filtered.index,
+                             color='Transaction Count',
+                             color_continuous_scale='blues',
+                             mapbox_style=mapbox_style,
+                             zoom=3, center=mapbox_center,
+                             hover_name='city_code',
+                             hover_data={'Transaction Count': True})
+
+      st.plotly_chart(fig, width=1200, height=600)
+
     st.markdown('---')
 
 

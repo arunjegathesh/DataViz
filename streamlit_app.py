@@ -137,7 +137,7 @@ with bar_plot:
         height=600, # Change the height as per your requirement
         title='Spread of sales across Product Sub Categories').interactive()
     
-    text = bar_chart.mark_text(
+    text = a_bar_chart.mark_text(
         align='center',
         baseline='middle',
         fontSize=12,

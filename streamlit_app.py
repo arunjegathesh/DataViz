@@ -129,7 +129,7 @@ with bar_plot:
     sales_by_subcat = filtered_data.groupby(['prod_subcat', 'Gender'])['total_amt'].sum().reset_index()
     tooltip = [alt.Tooltip('total_amt:N', title='Total Amount (€)', format='.2f'),alt.Tooltip('Gender:N', title='Gender')]
     bar_chart = alt.Chart(sales_by_subcat).mark_bar().encode(
-        x=alt.X('prod_subcat', sort='-y',axis=alt.Axis(title='Product Sub-Category')),
+        x=alt.X('prod_subcat', sort='-y',axis=alt.Axis(title='Product Sub-Category'), labelAngle=45)),
         y=alt.Y('total_amt:Q', axis=alt.Axis(title='Total Amount (€)')),
         color='Gender:N',
         tooltip=tooltip).properties(

@@ -125,6 +125,8 @@ with bar_plot:
 
 with spider_plot:
 
+    st.subheader('With great power comes great responsibility')
+    
     grouped_df = filtered_data.groupby(['prod_cat', 'Gender']).sum().reset_index()
 
     # Create a radar chart using Plotly Express

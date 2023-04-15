@@ -141,7 +141,7 @@ with bar_plot:
            y=alt.Y('total_amt:Q', axis=y_axis, stack=False),
            text=alt.Text('total_amt:Q', format='0,.3s'))
 
-    color_scale = alt.Scale(domain=['F', 'M'], range=['purple', 'orange'])
+    color_scale = alt.Scale(domain=['F', 'M'], range=['violet', 'red'])
     bar_chart = alt.Chart(sales_by_subcat).mark_bar().encode(
                 x=alt.X('prod_subcat', sort='-y',axis=alt.Axis(title='Product Sub-Category',labelAngle=315,labelFontSize=8, labelLimit=80)),
                 y=alt.Y('total_amt:Q', axis=alt.Axis(title='Total Amount (€)', format = '~s')),

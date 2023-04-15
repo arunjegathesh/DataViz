@@ -96,7 +96,7 @@ with trend_line:
 #     new_labels = {'prod_cat': 'Product Category', 'month': 'Month', 'AOV': 'Average Order Value'}
     tooltip = [alt.Tooltip('prod_cat:N', title='Product Category'),alt.Tooltip('month:N', title='Month'),alt.Tooltip('AOV:Q', title='Average Order Value')]
   
-    aov_chart = alt.Chart(aov_monthly).mark_line().encode(
+    aov_chart = alt.Chart(aov_monthly).mark_line(point=True).encode(
         x=alt.X('month:N', sort=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']),
         y=alt.Y('AOV:Q', axis=alt.Axis(title='Average Order Value (in €)')),
         color=alt.Color('prod_cat:N', legend=alt.Legend(title='Product Category')),

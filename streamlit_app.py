@@ -148,7 +148,7 @@ with bar_plot:
                                                                                                                labelAngle=315, 
                                                                                                                labelFontSize=8, 
                                                                                                                labelLimit=80)),
-        y=alt.Y('total_amt:Q', axis=alt.Axis(title='Total Amount (€)'), sort='-y')),
+        y=alt.Y('total_amt:Q', axis=alt.Axis(title='Total Amount (€)'), sort='-y'),
         color='Gender:N',
         tooltip=tooltip).properties(
         width=1200,

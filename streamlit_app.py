@@ -15,10 +15,10 @@ st.set_page_config(page_title = 'Retail Sales Analysis',
 # Define the containers
 header = st.container()
 kpis = st.container()
+map_plot = st.container()
 trend_line = st.container()
 bar_plot = st.container()
-spider_plot = st.container()
-map_plot = st.container()
+#spider_plot = st.container()
 
 @st.cache_data
 def get_data():
@@ -217,7 +217,7 @@ with bar_plot:
                     y=alt.Y('total_amt:Q', axis=alt.Axis(title='Total Amount (€)', format = '~s')),
                     color=alt.Color('Gender:N', scale=color_scale),
                     tooltip=tooltip).properties(
-                    width=1200,
+                    width='auto',
                     height=600 # Change the height as per your requirement
     #                 title='Spread of sales across Product Sub Categories'
                      ).interactive()

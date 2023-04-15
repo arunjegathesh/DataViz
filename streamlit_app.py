@@ -113,8 +113,8 @@ with trend_line:
         tooltip = tooltip
         ).properties(
         width=1200,
-        height=400, # Change the height as per your requirement
-        title='Seasonality of Average Order Value across Product Categories'
+        height=400 # Change the height as per your requirement
+#         title='Seasonality of Average Order Value across Product Categories'
     ).interactive()
 
     # Render the chart using Streamlit's Altair chart renderer
@@ -147,8 +147,9 @@ with bar_plot:
                 color='Gender:N',
                 tooltip=tooltip).properties(
                 width=1200,
-                height=600, # Change the height as per your requirement
-                title='Spread of sales across Product Sub Categories').interactive()
+                height=600 # Change the height as per your requirement
+#                 title='Spread of sales across Product Sub Categories'
+                 ).interactive()
     
     chart = bar_chart + text
     
@@ -251,7 +252,7 @@ merged_gdf.dropna(subset=['Transaction Count'], inplace=True)
 
 with map_plot:  
 
-      st.subheader('Where do rich people live?')
+      st.subheader('Where do rich people live in France?')
 
       #geo_filtered = merged_gdf[merged_gdf['year'] == year_select]
 

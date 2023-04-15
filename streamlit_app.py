@@ -277,7 +277,7 @@ with map_plot:
                              mapbox_style=mapbox_style,
                              zoom=3, center=mapbox_center,
                              hover_name='city_code',
-                             hover_data={'Transaction Count': True})
+                             hover_data={'Transaction Count': True, 'City': True})
 
       st.plotly_chart(fig, use_container_width=True, height=1000)
 

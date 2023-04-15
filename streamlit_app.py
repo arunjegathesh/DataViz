@@ -242,17 +242,17 @@ with bar_plot:
             stroke='transparent'
         ).interactive()
     
-        bar_chart = bar_chart.configure_view(
-                stroke='transparent'
-            ).configure_axisX(
-                labelAngle=-45,
-                labelAlign='right',
-                labelFontSize=8,
-                labelLimit=100,
-                titleY=35
-            ).configure_view(
-                continuousWidth=300
-            )
+#         bar_chart = bar_chart.configure_view(
+#                 stroke='transparent'
+#             ).configure_axisX(
+#                 labelAngle=-45,
+#                 labelAlign='right',
+#                 labelFontSize=8,
+#                 labelLimit=100,
+#                 titleY=35
+#             ).configure_view(
+#                 continuousWidth=300
+#             )
         
         chart = bar_chart + text
 

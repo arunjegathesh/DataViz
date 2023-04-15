@@ -142,8 +142,8 @@ with spider_plot:
     
 geo_df = get_data()
     
-city_counts = geo_df.groupby(['Year', 'city_code'])['transaction_id'].nunique().reset_index()
-city_counts.columns = ['Year', 'city_code', 'Transaction Count']
+city_counts = geo_df.groupby(['year', 'city_code'])['transaction_id'].nunique().reset_index()
+city_counts.columns = ['year', 'city_code', 'Transaction Count']
 
 regions_geojson = 'https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/regions.geojson'
 regions_gdf = gpd.read_file(regions_geojson)
@@ -184,7 +184,7 @@ with map_plot:
   
     st.subheader('map chart bla bla')
 
-    geo_filtered = merged_gdf[merged_gdf['Year'] == 2013]
+    geo_filtered = merged_gdf[merged_gdf['year'] == 2013]
     
     #geo_filtered = geo_df
 

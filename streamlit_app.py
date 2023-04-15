@@ -36,7 +36,7 @@ df = get_data()
 with spinner_cont:
     with st.spinner('Processing...'):
         # Long-running code here
-        time.sleep(5)
+
 
     #st.success('Done!')
     # Define the header section

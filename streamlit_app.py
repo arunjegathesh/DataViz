@@ -8,7 +8,7 @@ import numpy as np
 import plotly.express as px
 import geopandas as gpd
 
-st.set_page_config(page_title = 'Retail Sales Analysis',
+st.set_page_config(page_title = 'Retail Sales Anal',
                    layout='wide',
                    initial_sidebar_state='collapsed')
 

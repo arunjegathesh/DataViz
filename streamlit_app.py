@@ -140,24 +140,53 @@ with spider_plot:
     
     st.markdown('---')
     
-def get_geo_data():
-    df = pd.read_csv('merged_gdf.csv')
+geo_df = get_data()
     
-#     df['tran_date'] = pd.to_datetime(df['tran_date'])
+city_counts = geo_df.groupby(['Year', 'city_code'])['transaction_id'].nunique().reset_index()
+city_counts.columns = ['Year', 'city_code', 'Transaction Count']
 
-#     df['year'] = df['tran_date'].dt.year
-#     df['month'] = df['tran_date'].dt.strftime('%b')    
-    return df
+regions_geojson = 'https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/regions.geojson'
+regions_gdf = gpd.read_file(regions_geojson)
+regions_gdf.columns = ['code', 'city_code','geometry']
+regions_gdf.at[0,'city_code']='Paris'
+regions_gdf.at[7,'city_code']='Brittany'
+regions_gdf.at[12,'city_code']='Corsica'
+# Duplicate the first row
+row_to_duplicate = regions_gdf.iloc[0:1]
+regions_gdf = pd.concat([regions_gdf, row_to_duplicate], ignore_index=True)
+# Reset the index of the new DataFrame
+regions_gdf = regions_gdf.reset_index(drop=True)
+regions_gdf.at[13,'city_code']='Créteil'
 
-geo_df = get_geo_data()
+def get_geometry(row):
+    if row['city_code'] in city_counts['city_code'].unique():
+        return regions_gdf.loc[regions_gdf['city_code'] == row['city_code'], 'geometry'].iloc[0]
+
+geo_df['geometry'] = geo_df.apply(get_geometry, axis=1)
+
+# Join the transaction data to the GeoPandas DataFrame based on city names
+merged_gdf = regions_gdf.merge(city_counts, on='city_code', how='left')
+merged_gdf.dropna(subset=['Transaction Count'], inplace=True)
+
+
+# def get_geo_data():
+#     df = pd.read_csv('merged_gdf.csv')
+    
+# #     df['tran_date'] = pd.to_datetime(df['tran_date'])
+
+# #     df['year'] = df['tran_date'].dt.year
+# #     df['month'] = df['tran_date'].dt.strftime('%b')    
+#     return df
+
+# geo_df = get_geo_data()
 
 with map_plot:  
   
     st.subheader('map chart bla bla')
 
-    #geo_filtered = geo_df[geo_df['Year'] == 2013]
+    geo_filtered = merged_gdf[merged_gdf['Year'] == 2013]
     
-    geo_filtered = geo_df
+    #geo_filtered = geo_df
 
     # Define the mapbox style and center
     mapbox_style = "open-street-map"

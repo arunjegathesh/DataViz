@@ -97,7 +97,7 @@ with kpis:
 
 with trend_line:  
   
-    st.subheader('Trend Analysis of AoV')
+    st.subheader('What trend or seasonality can we observe from yearly data?')
   
     aov_monthly = filtered_data.groupby(['prod_cat', 'year', 'month'])['AOV'].mean().reset_index()
     
@@ -124,7 +124,7 @@ with trend_line:
     
 with bar_plot:  
   
-    st.subheader('Bar Chart bla bla')
+    st.subheader('Males vs Females! Who shops more?')
 
     sales_by_subcat = filtered_data.groupby(['prod_subcat', 'Gender'])['total_amt'].sum().reset_index()
     
@@ -153,8 +153,6 @@ with bar_plot:
     chart = bar_chart + text
     
     st.altair_chart(bar_chart)
-
-
 
 # with bar_plot:  
   
@@ -200,7 +198,7 @@ with bar_plot:
 
 with spider_plot:
 
-    st.subheader('With great power comes great responsibility')
+    st.subheader('Lets scout the categories radar!')
     
     grouped_df = filtered_data.groupby(['prod_cat', 'Gender']).sum().reset_index()
 
@@ -253,7 +251,7 @@ merged_gdf.dropna(subset=['Transaction Count'], inplace=True)
 
 with map_plot:  
 
-      st.subheader('map chart bla bla')
+      st.subheader('Where do rich people live?')
 
       #geo_filtered = merged_gdf[merged_gdf['year'] == year_select]
 
@@ -279,7 +277,7 @@ with map_plot:
                              hover_name='city_code',
                              hover_data={'Transaction Count': True})
 
-      st.plotly_chart(fig, use_container_width=True, height=800)
+      st.plotly_chart(fig, use_container_width=True, height=1000)
 
       st.markdown('---')
 

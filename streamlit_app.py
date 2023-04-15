@@ -19,7 +19,7 @@ kpis = st.container()
 map_plot = st.container()
 trend_line = st.container()
 bar_plot = st.container()
-#spider_plot = st.container()
+spinner_cont = st.container()
 
 @st.cache_data
 def get_data():
@@ -33,6 +33,7 @@ def get_data():
 
 df = get_data()
 
+with spinner_cont:
 with st.spinner('Processing...'):
     # Long-running code here
     time.sleep(5)

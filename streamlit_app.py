@@ -225,8 +225,8 @@ geo_df = geo_in[
 #                  (geo_in['Gender'] == gender_filter[0]) &
                    (geo_in['Store_type'].isin(store_filter)) & (geo_in['Age'].between(age_range[0], age_range[1]))]
     
-city_counts = geo_df.groupby(['year', 'city_code'])['transaction_id'].nunique().reset_index()
-city_counts.columns = ['year', 'city_code', 'Transaction Count']
+city_counts = geo_df.groupby(['year', 'city_code'])['total_amt'].sum().reset_index()
+city_counts.columns = ['year', 'city_code', 'Total Revenue (€)']
 
 regions_geojson = 'https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/regions.geojson'
 regions_gdf = gpd.read_file(regions_geojson)
@@ -249,7 +249,7 @@ geo_df['geometry'] = geo_df.apply(get_geometry, axis=1)
 
 # Join the transaction data to the GeoPandas DataFrame based on city names
 merged_gdf = regions_gdf.merge(city_counts, on='city_code', how='left')
-merged_gdf.dropna(subset=['Transaction Count'], inplace=True)
+merged_gdf.dropna(subset=['Total Revenue (€)'], inplace=True)
 
 with map_plot:  
 
@@ -272,12 +272,12 @@ with map_plot:
       fig = px.choropleth_mapbox(geo_filtered,
                              geojson=geo_filtered.geometry,
                              locations=geo_filtered.index,
-                             color='Transaction Count',
+                             color='Total Revenue (€)',
                              color_continuous_scale='blues',
                              mapbox_style=mapbox_style,
                              zoom=3, center=mapbox_center,
                              hover_name='city_code',
-                             hover_data={'Transaction Count': True})
+                             hover_data={'Total Revenue (€)': True})
 
       st.plotly_chart(fig, use_container_width=True, height=1000)
 

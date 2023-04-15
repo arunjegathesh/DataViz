@@ -103,7 +103,7 @@ with trend_line:
     
 #     tooltip = ['prod_cat:N (Product Category)', 'month:N (Month)', 'AOV:Q (Average Order Value)']
 #     new_labels = {'prod_cat': 'Product Category', 'month': 'Month', 'AOV': 'Average Order Value'}
-    tooltip = [alt.Tooltip('prod_cat:N', title='Product Category'),alt.Tooltip('month:N', title='Month'),alt.Tooltip('AOV:Q', title='Average Order Value', format='.2f')]
+    tooltip = [alt.Tooltip('prod_cat:N', title='Product Category'),alt.Tooltip('month:N', title='Month'),alt.Tooltip('AOV:Q', title='Average Order Value (€)', format='.2f')]
   
     aov_chart = alt.Chart(aov_monthly).mark_line(point=True).encode(
         x=alt.X('month:N', sort=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], axis=alt.Axis(title='Month')),
@@ -127,12 +127,12 @@ with bar_plot:
     st.subheader('Bar Chart bla bla')
 
     sales_by_subcat = filtered_data.groupby(['prod_subcat', 'Gender'])['total_amt'].sum().reset_index()
-
+    tooltip = [alt.Tooltip('prod_cat:N', title='Product Sub-Category'),alt.Tooltip('total_amt:N', title='Total Amount (€)', format='.2f'),alt.Tooltip('Gender:N', title='Gender')]
     bar_chart = alt.Chart(sales_by_subcat).mark_bar().encode(
-        x=alt.X('prod_subcat', sort='-y'),
-        y='total_amt:Q',
+        x=alt.X('prod_subcat', sort='-y',axis=alt.Axis(title='Product Sub-Category')),
+        y=alt.Y('total_amt:Q', axis=alt.Axis(title='Total Amount')),
         color='Gender:N',
-        tooltip=['prod_subcat:N', 'total_amt:N', 'Gender:N']).properties(
+        tooltip=tooltip).properties(
         width=1200,
         height=400, # Change the height as per your requirement
         title='Spread of sales across Product Sub Categories').interactive()

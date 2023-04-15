@@ -8,7 +8,7 @@ import numpy as np
 import plotly.express as px
 import geopandas as gpd
 
-st.set_page_config(page_title = 'Retail Sales Analysis Arun change',
+st.set_page_config(page_title = 'Retail Sales Analysis',
                    layout='wide',
                    initial_sidebar_state='collapsed')
 
@@ -84,7 +84,7 @@ with kpis:
 
 with trend_line:  
   
-    st.subheader('Trend Anal of AoV')
+    st.subheader('Trend Analysis of AoV')
   
     aov_monthly = filtered_data.groupby(['prod_cat', 'year', 'month'])['AOV'].mean().reset_index()
     

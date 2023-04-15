@@ -279,7 +279,7 @@ with map_plot:
                              hover_name='city_code',
                              hover_data={'Transaction Count': True})
 
-      st.plotly_chart(fig, width=200, height=600)
+      st.plotly_chart(fig, use_container_width=True, height=600)
 
       st.markdown('---')
 

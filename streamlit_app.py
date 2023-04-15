@@ -78,7 +78,7 @@ with kpis:
     col1, col2, col3 = st.columns(3)
     
     with col1:
-      st.image('flaticons/money-bag.png',use_column_width='Auto')
+      st.image('flaticons/money-bag.png',width=80, height=80)
       #st.metric(label = 'Total Impressions', value= numerize(total_impressions))
       st.metric("Total Sales", f"€ {filtered_sales/1000000:,.2f}M / € {total_sales/1000000:,.2f}M")
     

@@ -137,7 +137,23 @@ with bar_plot:
         height=600, # Change the height as per your requirement
         title='Spread of sales across Product Sub Categories').interactive()
     
-    st.altair_chart(bar_chart)
+    # Add text labels for AOV values
+    text = bar_chart.mark_text(
+        align='center',
+        baseline='middle',
+        fontSize=12,
+        dx=0,  # shift text to the right
+        dy=10  # shift text upwards
+    ).encode(
+        text=alt.Text('format(datum.total_amt/10000, ".1f") + "K"')  # format AOV values in thousands
+    )
+
+    # Combine the bar chart and text labels
+    chart_with_text = (bar_chart + text).interactive()
+
+    # Display the chart
+    st.altair_chart(chart_with_text)
+#     st.altair_chart(bar_chart)
     
     st.markdown('---')
 

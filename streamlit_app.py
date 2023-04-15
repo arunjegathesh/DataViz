@@ -255,7 +255,7 @@ with bar_plot:
 #                 continuousWidth=300
 #             )
         
-        chart = bar_chart + text
+#        chart = bar_chart + text
 
         st.altair_chart(bar_chart)
 

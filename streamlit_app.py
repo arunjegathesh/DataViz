@@ -95,7 +95,7 @@ with trend_line:
         x=alt.X('month:N', sort=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']),
         y=alt.Y('AOV:Q', axis=alt.Axis(title='Average Order Value (in €)')),
         color='prod_cat:N',
-        tooltip= ['prod_cat:N', 'month:N', 'AOV:Q']
+        tooltip= ['prod_cat:N', title='Product Category', 'month:N',title='dfd Category', 'AOV:Q',title='dfdf Category']
         ).properties(
         width=1200,
         height=400, # Change the height as per your requirement

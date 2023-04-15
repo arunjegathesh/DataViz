@@ -152,7 +152,7 @@ with bar_plot:
     
     chart = bar_chart + text
     
-    st.altair_chart(text)
+    st.altair_chart(bar_chart)
 
 
 

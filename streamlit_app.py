@@ -208,7 +208,7 @@ with spider_plot:
                         line_close=True, labels={'prod_cat': 'Product Category', 'Qty': 'Quantity'}, template='plotly_dark')
 
     fig.update_layout(#title=f'Sum of Quantities by Product Category and Gender',
-                      polar=dict(radialaxis=dict(visible=True, range=[0, grouped_df['Qty'].max()],color='black')))
+                      polar=dict(radialaxis=dict(visible=True, range=[0, grouped_df['Qty'].max()],color='white')))
 #                       paper_bgcolor='black')
   
     # Display the radar chart

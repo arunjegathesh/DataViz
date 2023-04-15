@@ -133,7 +133,7 @@ with bar_plot:
         y=alt.Y('total_amt:Q', axis=alt.Axis(title='Total Amount (€)')),
         color='Gender:N',
         tooltip=tooltip).properties(
-        width=1100,
+        width=1200,
         height=600, # Change the height as per your requirement
         title='Spread of sales across Product Sub Categories').interactive()
     

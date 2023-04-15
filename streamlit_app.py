@@ -33,273 +33,267 @@ def get_data():
 
 df = get_data()
 
-with spinner_cont:
-    with st.spinner('Processing...'):
-        # Long-running code here
-
-
-    #st.success('Done!')
-    # Define the header section
-        with header:
-            st.title('Retail Sales Analysis')
-        #    st.subheader('Visualizing seasonal trends in average order value')
-            st.markdown('---')
 
-        with st.sidebar:
+#st.success('Done!')
+# Define the header section
+with header:
+    st.title('Retail Sales Analysis')
+#    st.subheader('Visualizing seasonal trends in average order value')
+    st.markdown('---')
 
-            country_filter = st.multiselect(label= 'Select the region',
-                                        options=df['city_code'].unique(),
-                                        default=df['city_code'].unique())
+with st.sidebar:
 
-            year_select = st.radio(label= 'Select the required year (single select)',
-                                        options=np.sort(df['year'].unique()).tolist())
+    country_filter = st.multiselect(label= 'Select the region',
+                                options=df['city_code'].unique(),
+                                default=df['city_code'].unique())
 
-            store_filter = st.multiselect(label= 'Select the store type',
-                                        options=df['Store_type'].unique(),
-                                        default=df['Store_type'].unique())
+    year_select = st.radio(label= 'Select the required year (single select)',
+                                options=np.sort(df['year'].unique()).tolist())
 
-            age_range = st.slider("Select age range", min_value=int(df['Age'].min()), max_value=int(df['Age'].max()), 
-                                  value=(int(df['Age'].min()), int(df['Age'].max())))
+    store_filter = st.multiselect(label= 'Select the store type',
+                                options=df['Store_type'].unique(),
+                                default=df['Store_type'].unique())
 
-        # filter the data based on the user selection
-        filtered_data = df[(df['city_code'].isin(country_filter)) & 
-                           (df['year']==year_select) & 
-        #                  (df['Gender'] == gender_filter[0]) &
-                           (df['Store_type'].isin(store_filter)) & (df['Age'].between(age_range[0], age_range[1]))]
-
-        # calculate the KPI values for filtered data
-        filtered_sales = filtered_data['total_amt'].sum()
-        filtered_quantity = filtered_data['Qty'].sum()
-        filtered_customers = filtered_data['customer_Id'].nunique()
-
-        #col1, col2, col3 = st.columns(3)
+    age_range = st.slider("Select age range", min_value=int(df['Age'].min()), max_value=int(df['Age'].max()), 
+                          value=(int(df['Age'].min()), int(df['Age'].max())))
 
-        # calculate the KPI values
-        total_sales = df['total_amt'].sum()
-        total_quantity = df['Qty'].sum()
-        total_customers = df['customer_Id'].nunique()
+# filter the data based on the user selection
+filtered_data = df[(df['city_code'].isin(country_filter)) & 
+                   (df['year']==year_select) & 
+#                  (df['Gender'] == gender_filter[0]) &
+                   (df['Store_type'].isin(store_filter)) & (df['Age'].between(age_range[0], age_range[1]))]
+
+# calculate the KPI values for filtered data
+filtered_sales = filtered_data['total_amt'].sum()
+filtered_quantity = filtered_data['Qty'].sum()
+filtered_customers = filtered_data['customer_Id'].nunique()
+
+#col1, col2, col3 = st.columns(3)
 
-        # display the KPIs in the container
-        with kpis:
-            st.subheader('KPIs Section Analysis')
-            col1, col2, col3 = st.columns(3)
+# calculate the KPI values
+total_sales = df['total_amt'].sum()
+total_quantity = df['Qty'].sum()
+total_customers = df['customer_Id'].nunique()
 
-            with col1:
-              st.image('flaticons/money-bag.png',use_column_width='True', width=150)
-              #st.metric(label = 'Total Impressions', value= numerize(total_impressions))
-              st.metric("Total Sales", f"€ {filtered_sales/1000000:,.2f}M / € {total_sales/1000000:,.2f}M")
+# display the KPIs in the container
+with kpis:
+    st.subheader('KPIs Section Analysis')
+    col1, col2, col3 = st.columns(3)
 
-            with col2:
-              st.image('flaticons/shopping-cart.png',use_column_width='True', width=150)
-              #st.metric(label = 'Total Impressions', value= numerize(total_impressions))
-              st.metric("Total Quantity", f"{filtered_quantity:,.0f} / {total_quantity:,.0f}")
+    with col1:
+      st.image('flaticons/money-bag.png',use_column_width='True', width=150)
+      #st.metric(label = 'Total Impressions', value= numerize(total_impressions))
+      st.metric("Total Sales", f"€ {filtered_sales/1000000:,.2f}M / € {total_sales/1000000:,.2f}M")
 
-            with col3:
-              st.image('flaticons/people.png',use_column_width='True', width=150)
-              #st.metric(label = 'Total Impressions', value= numerize(total_impressions))
-              st.metric("# of Customers", f"{filtered_customers:,.0f} / {total_customers:,.0f}")
-
-            st.write("Each KPI representing a quick summary of the top metrics from the overall data. This structure aids the any user of the dashboard to get up-to-speed with the business status with a quick glance. Dynamic metrics that show the current selections' data while also showing the overall picture.")
+    with col2:
+      st.image('flaticons/shopping-cart.png',use_column_width='True', width=150)
+      #st.metric(label = 'Total Impressions', value= numerize(total_impressions))
+      st.metric("Total Quantity", f"{filtered_quantity:,.0f} / {total_quantity:,.0f}")
 
-            #col3.metric("Distinct # of Customers", f"{filtered_customers:,.0f} / {total_customers:,.0f}")
-            st.markdown('---')
+    with col3:
+      st.image('flaticons/people.png',use_column_width='True', width=150)
+      #st.metric(label = 'Total Impressions', value= numerize(total_impressions))
+      st.metric("# of Customers", f"{filtered_customers:,.0f} / {total_customers:,.0f}")
+
+    st.write("Each KPI representing a quick summary of the top metrics from the overall data. This structure aids the any user of the dashboard to get up-to-speed with the business status with a quick glance. Dynamic metrics that show the current selections' data while also showing the overall picture.")
 
-        geo_in = get_data()
+    #col3.metric("Distinct # of Customers", f"{filtered_customers:,.0f} / {total_customers:,.0f}")
+    st.markdown('---')
 
-        geo_df = geo_in[
-                           #(geo_in['city_code'].isin(country_filter)) &
-                           (geo_in['year']==year_select) & 
-        #                  (geo_in['Gender'] == gender_filter[0]) &
-                           (geo_in['Store_type'].isin(store_filter)) & (geo_in['Age'].between(age_range[0], age_range[1]))]
+geo_in = get_data()
 
-        city_counts = geo_df.groupby(['year', 'city_code'])['total_amt'].sum().reset_index()
-        city_counts.columns = ['year', 'city_code', 'Total Revenue (€)']
+geo_df = geo_in[
+                   #(geo_in['city_code'].isin(country_filter)) &
+                   (geo_in['year']==year_select) & 
+#                  (geo_in['Gender'] == gender_filter[0]) &
+                   (geo_in['Store_type'].isin(store_filter)) & (geo_in['Age'].between(age_range[0], age_range[1]))]
 
-        regions_geojson = 'https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/regions.geojson'
-        regions_gdf = gpd.read_file(regions_geojson)
-        regions_gdf.columns = ['code', 'city_code','geometry']
-        regions_gdf.at[0,'city_code']='Paris'
-        regions_gdf.at[7,'city_code']='Brittany'
-        regions_gdf.at[12,'city_code']='Corsica'
-        # Duplicate the first row
-        row_to_duplicate = regions_gdf.iloc[0:1]
-        regions_gdf = pd.concat([regions_gdf, row_to_duplicate], ignore_index=True)
-        # Reset the index of the new DataFrame
-        regions_gdf = regions_gdf.reset_index(drop=True)
-        regions_gdf.at[13,'city_code']='Créteil'
+city_counts = geo_df.groupby(['year', 'city_code'])['total_amt'].sum().reset_index()
+city_counts.columns = ['year', 'city_code', 'Total Revenue (€)']
 
-        def get_geometry(row):
-            if row['city_code'] in city_counts['city_code'].unique():
-                return regions_gdf.loc[regions_gdf['city_code'] == row['city_code'], 'geometry'].iloc[0]
-
-        geo_df['geometry'] = geo_df.apply(get_geometry, axis=1)
+regions_geojson = 'https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/regions.geojson'
+regions_gdf = gpd.read_file(regions_geojson)
+regions_gdf.columns = ['code', 'city_code','geometry']
+regions_gdf.at[0,'city_code']='Paris'
+regions_gdf.at[7,'city_code']='Brittany'
+regions_gdf.at[12,'city_code']='Corsica'
+# Duplicate the first row
+row_to_duplicate = regions_gdf.iloc[0:1]
+regions_gdf = pd.concat([regions_gdf, row_to_duplicate], ignore_index=True)
+# Reset the index of the new DataFrame
+regions_gdf = regions_gdf.reset_index(drop=True)
+regions_gdf.at[13,'city_code']='Créteil'
 
-        # Join the transaction data to the GeoPandas DataFrame based on city names
-        merged_gdf = regions_gdf.merge(city_counts, on='city_code', how='left')
-        merged_gdf.dropna(subset=['Total Revenue (€)'], inplace=True)
+def get_geometry(row):
+    if row['city_code'] in city_counts['city_code'].unique():
+        return regions_gdf.loc[regions_gdf['city_code'] == row['city_code'], 'geometry'].iloc[0]
+
+geo_df['geometry'] = geo_df.apply(get_geometry, axis=1)
 
-        with map_plot:  
+# Join the transaction data to the GeoPandas DataFrame based on city names
+merged_gdf = regions_gdf.merge(city_counts, on='city_code', how='left')
+merged_gdf.dropna(subset=['Total Revenue (€)'], inplace=True)
 
-              st.subheader('Where do rich people live in France?')
+with map_plot:  
 
-              #geo_filtered = merged_gdf[merged_gdf['year'] == year_select]
+      st.subheader('Where do rich people live in France?')
 
-              #geo_filtered = geo_df
+      #geo_filtered = merged_gdf[merged_gdf['year'] == year_select]
 
-              geo_filtered = merged_gdf
+      #geo_filtered = geo_df
 
-              # Define the mapbox style and center
-              mapbox_style = "open-street-map"
-              mapbox_center = {"lat": 46.2276, "lon": 2.2137}
+      geo_filtered = merged_gdf
 
-              # Define the bounds for Europe
-              bounds = [[-27.070207, -34.276938], [75.0599, 60.238064]]
+      # Define the mapbox style and center
+      mapbox_style = "open-street-map"
+      mapbox_center = {"lat": 46.2276, "lon": 2.2137}
 
-          # Create a choropleth map with Plotly
-              fig = px.choropleth_mapbox(geo_filtered,
-                                     geojson=geo_filtered.geometry,
-                                     locations=geo_filtered.index,
-                                     color='Total Revenue (€)',
-                                     color_continuous_scale='blues',
-                                     mapbox_style=mapbox_style,
-                                     zoom=3, center=mapbox_center,
-                                     hover_name='city_code',
-        #                             hover_data={'Total Revenue (€)': True})
-                                     hover_data={'Total Revenue (€)': ':,.3r K'})
+      # Define the bounds for Europe
+      bounds = [[-27.070207, -34.276938], [75.0599, 60.238064]]
 
-           #   fig.update_traces(hovertemplate='Total Revenue (€): %{hovertext}<extra></extra>')
+  # Create a choropleth map with Plotly
+      fig = px.choropleth_mapbox(geo_filtered,
+                             geojson=geo_filtered.geometry,
+                             locations=geo_filtered.index,
+                             color='Total Revenue (€)',
+                             color_continuous_scale='blues',
+                             mapbox_style=mapbox_style,
+                             zoom=3, center=mapbox_center,
+                             hover_name='city_code',
+#                             hover_data={'Total Revenue (€)': True})
+                             hover_data={'Total Revenue (€)': ':,.3r K'})
 
-              st.plotly_chart(fig, use_container_width=True, height=1000)
-              st.write("This map is a wonderful representation of France")
+   #   fig.update_traces(hovertemplate='Total Revenue (€): %{hovertext}<extra></extra>')
 
-              st.markdown('---')
+      st.plotly_chart(fig, use_container_width=True, height=1000)
+      st.write("This map is a wonderful representation of France")
 
-        with trend_line:  
+      st.markdown('---')
 
-            st.subheader('What trend or seasonality can we observe from yearly data?')
+with trend_line:  
 
-            aov_monthly = filtered_data.groupby(['prod_cat', 'year', 'month'])['AOV'].mean().reset_index()
+    st.subheader('What trend or seasonality can we observe from yearly data?')
 
-        #     tooltip = ['prod_cat:N (Product Category)', 'month:N (Month)', 'AOV:Q (Average Order Value)']
-        #     new_labels = {'prod_cat': 'Product Category', 'month': 'Month', 'AOV': 'Average Order Value'}
-            tooltip = [alt.Tooltip('prod_cat:N', title='Product Category'),alt.Tooltip('month:N', title='Month'),alt.Tooltip('AOV:Q', title='Average Order Value (€)', format='.2f')]
+    aov_monthly = filtered_data.groupby(['prod_cat', 'year', 'month'])['AOV'].mean().reset_index()
 
-            aov_chart = alt.Chart(aov_monthly).mark_line(point=True).encode(
-                x=alt.X('month:N', sort=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], axis=alt.Axis(title='Month')),
-                y=alt.Y('AOV:Q', axis=alt.Axis(title='Average Order Value (€)')),
-                color=alt.Color('prod_cat:N', legend=alt.Legend(title='Product Category')),
-        #         tooltip= ['prod_cat:N', 'month:N', 'AOV:Q']
-                tooltip = tooltip
-                ).properties(
-                width=1200,
-                height=400 # Change the height as per your requirement
-        #         title='Seasonality of Average Order Value across Product Categories'
-            ).interactive()
+#     tooltip = ['prod_cat:N (Product Category)', 'month:N (Month)', 'AOV:Q (Average Order Value)']
+#     new_labels = {'prod_cat': 'Product Category', 'month': 'Month', 'AOV': 'Average Order Value'}
+    tooltip = [alt.Tooltip('prod_cat:N', title='Product Category'),alt.Tooltip('month:N', title='Month'),alt.Tooltip('AOV:Q', title='Average Order Value (€)', format='.2f')]
 
-            # Render the chart using Streamlit's Altair chart renderer
-            st.altair_chart(aov_chart)
+    aov_chart = alt.Chart(aov_monthly).mark_line(point=True).encode(
+        x=alt.X('month:N', sort=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], axis=alt.Axis(title='Month')),
+        y=alt.Y('AOV:Q', axis=alt.Axis(title='Average Order Value (€)')),
+        color=alt.Color('prod_cat:N', legend=alt.Legend(title='Product Category')),
+#         tooltip= ['prod_cat:N', 'month:N', 'AOV:Q']
+        tooltip = tooltip
+        ).properties(
+        width=1200,
+        height=400 # Change the height as per your requirement
+#         title='Seasonality of Average Order Value across Product Categories'
+    ).interactive()
 
-            st.markdown('---')
+    # Render the chart using Streamlit's Altair chart renderer
+    st.altair_chart(aov_chart)
 
-        with bar_plot: 
-            col1, col2 = st.columns(2)
-            with col1:  
-                st.subheader('Males vs Females! Who shops more?')
+    st.markdown('---')
 
-                sales_by_subcat = filtered_data.groupby(['prod_subcat', 'Gender'])['total_amt'].sum().reset_index()
+with bar_plot: 
+    col1, col2 = st.columns(2)
+    with col1:  
+        st.subheader('Males vs Females! Who shops more?')
 
-                label_data = filtered_data.groupby(['prod_subcat'])['total_amt'].sum().reset_index()
+        sales_by_subcat = filtered_data.groupby(['prod_subcat', 'Gender'])['total_amt'].sum().reset_index()
 
-                tooltip = [alt.Tooltip('total_amt:N', title='Total Amount (€)', format='.2f'),alt.Tooltip('Gender:N', title='Gender')]
+        label_data = filtered_data.groupby(['prod_subcat'])['total_amt'].sum().reset_index()
 
-                # Format y-axis labels as thousands
-                y_axis = alt.Axis(title='Total Amount (€)', format='~s')
+        tooltip = [alt.Tooltip('total_amt:N', title='Total Amount (€)', format='.2f'),alt.Tooltip('Gender:N', title='Gender')]
 
-                # Add data labels to the top of the bars
-                text = alt.Chart(label_data).mark_text(dy=-5, color='black').encode(
-                       x=alt.X('prod_subcat', sort='-y', axis=alt.Axis(title='Product Sub-Category',labelAngle=315,labelFontSize=8, labelLimit=80)),
-                       y=alt.Y('total_amt:Q', axis=y_axis, stack=False),
-                       text=alt.Text('total_amt:Q', format='0,.3s'))
+        # Format y-axis labels as thousands
+        y_axis = alt.Axis(title='Total Amount (€)', format='~s')
 
-                color_scale = alt.Scale(domain=['F', 'M'], range=['#666EF6', '#B54B36'])
-                bar_chart = alt.Chart(sales_by_subcat).mark_bar().encode(
-                            x=alt.X('prod_subcat', sort='-y',axis=alt.Axis(title='Product Sub-Category',labelAngle=315,labelFontSize=8, labelLimit=80)),
-                            y=alt.Y('total_amt:Q', axis=alt.Axis(title='Total Amount (€)', format = '~s')),
-                            color=alt.Color('Gender:N', scale=color_scale),
-                            tooltip=tooltip).properties(
-                            width=600,
-                            height=600 # Change the height as per your requirement
-            #                 title='Spread of sales across Product Sub Categories'
-                             ).interactive()
+        # Add data labels to the top of the bars
+        text = alt.Chart(label_data).mark_text(dy=-5, color='black').encode(
+               x=alt.X('prod_subcat', sort='-y', axis=alt.Axis(title='Product Sub-Category',labelAngle=315,labelFontSize=8, labelLimit=80)),
+               y=alt.Y('total_amt:Q', axis=y_axis, stack=False),
+               text=alt.Text('total_amt:Q', format='0,.3s'))
 
-                chart = bar_chart + text
+        color_scale = alt.Scale(domain=['F', 'M'], range=['#666EF6', '#B54B36'])
+        bar_chart = alt.Chart(sales_by_subcat).mark_bar().encode(
+                    x=alt.X('prod_subcat', sort='-y',axis=alt.Axis(title='Product Sub-Category',labelAngle=315,labelFontSize=8, labelLimit=80)),
+                    y=alt.Y('total_amt:Q', axis=alt.Axis(title='Total Amount (€)', format = '~s')),
+                    color=alt.Color('Gender:N', scale=color_scale),
+                    tooltip=tooltip).properties(
+                    width=600,
+                    height=600 # Change the height as per your requirement
+    #                 title='Spread of sales across Product Sub Categories'
+                     ).interactive()
 
-                st.altair_chart(bar_chart)
+        chart = bar_chart + text
 
-            with col2:
-                st.subheader('Lets scout the categories radar!')
+        st.altair_chart(bar_chart)
 
-                grouped_df = filtered_data.groupby(['prod_cat', 'Gender']).sum().reset_index()
+    with col2:
+        st.subheader('Lets scout the categories radar!')
 
-                # Create a radar chart using Plotly Express
-                fig = px.line_polar(grouped_df, r='Qty', theta='prod_cat', color='Gender',
-                                  line_close=True, labels={'prod_cat': 'Product Category', 'Qty': 'Quantity'}, template='plotly_dark')
+        grouped_df = filtered_data.groupby(['prod_cat', 'Gender']).sum().reset_index()
 
-                fig.update_layout(#title=f'Sum of Quantities by Product Category and Gender',
-                                polar=dict(radialaxis=dict(visible=True, range=[0, grouped_df['Qty'].max()],color='white')))
-                #                       paper_bgcolor='black')
+        # Create a radar chart using Plotly Express
+        fig = px.line_polar(grouped_df, r='Qty', theta='prod_cat', color='Gender',
+                          line_close=True, labels={'prod_cat': 'Product Category', 'Qty': 'Quantity'}, template='plotly_dark')
 
-                # Display the radar chart
-                st.plotly_chart(fig)
+        fig.update_layout(#title=f'Sum of Quantities by Product Category and Gender',
+                        polar=dict(radialaxis=dict(visible=True, range=[0, grouped_df['Qty'].max()],color='white')))
+        #                       paper_bgcolor='black')
 
-        # with bar_plot:  
+        # Display the radar chart
+        st.plotly_chart(fig)
 
-        #     st.subheader('Bar Chart bla bla')
+# with bar_plot:  
 
-        #     sales_by_subcat = filtered_data.groupby(['prod_subcat', 'Gender'])['total_amt'].sum().reset_index()
+#     st.subheader('Bar Chart bla bla')
 
-        #     # calculate the total sales by subcategory
-        #     total_sales_by_subcat = filtered_data.groupby('prod_subcat')['total_amt'].sum().reset_index()
-        #     total_sales_by_subcat = total_sales_by_subcat.rename(columns={'total_amt': 'total_sales'})
+#     sales_by_subcat = filtered_data.groupby(['prod_subcat', 'Gender'])['total_amt'].sum().reset_index()
 
-        #     # sort the subcategories by total sales
-        #     sales_by_subcat = sales_by_subcat.merge(total_sales_by_subcat, on='prod_subcat')
-        #     sales_by_subcat = sales_by_subcat.sort_values(['total_sales', 'prod_subcat'], ascending=[False, True])
+#     # calculate the total sales by subcategory
+#     total_sales_by_subcat = filtered_data.groupby('prod_subcat')['total_amt'].sum().reset_index()
+#     total_sales_by_subcat = total_sales_by_subcat.rename(columns={'total_amt': 'total_sales'})
 
-        #     # format the total_amt values as thousands
-        #     sales_by_subcat['total_amt'] = '€ ' + (sales_by_subcat['total_amt'] / 1000).astype(int).apply(lambda x: '{:,}'.format(x)) + ' K'
+#     # sort the subcategories by total sales
+#     sales_by_subcat = sales_by_subcat.merge(total_sales_by_subcat, on='prod_subcat')
+#     sales_by_subcat = sales_by_subcat.sort_values(['total_sales', 'prod_subcat'], ascending=[False, True])
 
-        #     # plot the bar chart with data labels
-        #     bar_chart = alt.Chart(sales_by_subcat).mark_bar().encode(
-        #         x=alt.X('prod_subcat:N', sort='-y', axis=alt.Axis(title='Product Sub-Category', labelAngle=315, labelFontSize=8, labelLimit=80)),
-        #         y=alt.Y('total_amt:Q', axis=alt.Axis(title='Total Amount (€)')),
-        #         color=alt.Color('Gender:N', legend=alt.Legend(title="Gender")),
-        #         tooltip=[alt.Tooltip('total_amt:N', title='Total Amount (€)', format='.2f'), alt.Tooltip('Gender:N', title='Gender')],
-        #         text=alt.Text('total_amt:Q', format='.1s')
-        #     ).properties(
-        #         width=1200,
-        #         height=600, # Change the height as per your requirement
-        #         title='Spread of sales across Product Sub Categories'
-        #     ).configure_axis(
-        #         labelFontSize=12,
-        #         titleFontSize=14
-        #     ).configure_title(
-        #         fontSize=18
-        #     )
+#     # format the total_amt values as thousands
+#     sales_by_subcat['total_amt'] = '€ ' + (sales_by_subcat['total_amt'] / 1000).astype(int).apply(lambda x: '{:,}'.format(x)) + ' K'
 
-        #     # format the y-axis labels as thousands
-        #     bar_chart.encoding.y.axis.format = 's'
+#     # plot the bar chart with data labels
+#     bar_chart = alt.Chart(sales_by_subcat).mark_bar().encode(
+#         x=alt.X('prod_subcat:N', sort='-y', axis=alt.Axis(title='Product Sub-Category', labelAngle=315, labelFontSize=8, labelLimit=80)),
+#         y=alt.Y('total_amt:Q', axis=alt.Axis(title='Total Amount (€)')),
+#         color=alt.Color('Gender:N', legend=alt.Legend(title="Gender")),
+#         tooltip=[alt.Tooltip('total_amt:N', title='Total Amount (€)', format='.2f'), alt.Tooltip('Gender:N', title='Gender')],
+#         text=alt.Text('total_amt:Q', format='.1s')
+#     ).properties(
+#         width=1200,
+#         height=600, # Change the height as per your requirement
+#         title='Spread of sales across Product Sub Categories'
+#     ).configure_axis(
+#         labelFontSize=12,
+#         titleFontSize=14
+#     ).configure_title(
+#         fontSize=18
+#     )
 
-        #     st.altair_chart(bar_chart, use_container_width=True)
+#     # format the y-axis labels as thousands
+#     bar_chart.encoding.y.axis.format = 's'
 
-            st.markdown('---')
-        time.sleep(5)
+#     st.altair_chart(bar_chart, use_container_width=True)
 
-    st.success('Done!')
+    st.markdown('---')
+  
 # with spider_plot:
 
 #     st.subheader('Lets scout the categories radar!')
-    
+
 #     grouped_df = filtered_data.groupby(['prod_cat', 'Gender']).sum().reset_index()
 
 #     # Create a radar chart using Plotly Express
@@ -309,12 +303,12 @@ with spinner_cont:
 #     fig.update_layout(#title=f'Sum of Quantities by Product Category and Gender',
 #                       polar=dict(radialaxis=dict(visible=True, range=[0, grouped_df['Qty'].max()],color='white')))
 # #                       paper_bgcolor='black')
-  
+
 #     # Display the radar chart
 #     st.plotly_chart(fig)
-    
+
 #     st.markdown('---')
-    
+
 
 
 
@@ -329,7 +323,7 @@ with spinner_cont:
 
 # # Display the initial radar chart
 # update_chart(df['city_code'].unique()[0])
-    
+
 # def render_svg(svg):
 #     """Renders the given svg string."""
 #     b64 = base64.b64encode(svg.encode('utf-8')).decode("utf-8")
@@ -337,26 +331,26 @@ with spinner_cont:
 #     st.write(html, unsafe_allow_html=True)
 
 # with spider_plot:  
-  
+
 #     st.subheader('With great power comes great responsibility')    
 #     grouped_df = filtered_data.groupby(['prod_cat', 'Gender'])['Qty'].sum().reset_index()
 
 #     # Reshape the dataframe to a wide format
 #     pivoted_df = grouped_df.pivot_table(index='prod_cat', columns='Gender', values='Qty')
-    
+
 #     radar_chart = pygal.Radar(show_legend=True, tooltip_border_radius=10, tooltip_font_size=15, style=pygal.style.LightGreenStyle)
 #     radar_chart.title = f'Sum of Quantities by Product Category and Gender'
 #     radar_chart.x_labels = pivoted_df.index.tolist()
 #     radar_chart.add('Male', pivoted_df['M'].tolist())
 #     radar_chart.add('Female', pivoted_df['F'].tolist())
-    
+
 # #    st.pygal_chart(radar_chart)
- 
+
 #     chart = radar_chart.render()
 #     # Convert SVG chart to PNG
 #     st.write('### SVG Output')
 #     render_svg(chart)
-    
+
 #chart1,chart2 = st.columns(2)
 #    st.markdown('---')
 
@@ -369,7 +363,7 @@ with spinner_cont:
 # with kpis:
 #     st.subheader('KPIs Section Analysis')
 # #    st.write('This section provides a detailed analysis of the data.')
-  
+
 #     def get_data():
 #       df = pd.read_csv('clean_data.csv') 
 #       return df
@@ -385,12 +379,12 @@ with spinner_cont:
 #     #total_approved_conversions = float(df1['Approved_Conversion'].sum())
 
 #     total_amount,average_aov,total_qty = st.columns(3,gap='large')
-    
+
 # # Define the analysis section
 # with analysis:
 #     st.subheader('Data Analysis')
 #     st.write('This section provides a detailed analysis of the data.')
-    
+
 #     def get_data():
 #     df = pd.read_csv('clean_data.csv')
 #     connection = sqlite3.connect('database.db')
@@ -398,14 +392,14 @@ with spinner_cont:
 #     return df
 
 #     df = get_data()
-    
-    
-    
+
+
+
 #     year_filter = st.sidebar.radio('Select year:', df['year'].unique().tolist())
-    
+
 #     # Filter the data based on the year filter    
 #     df = df[df['year'] == year_filter]
-    
+
 #     # Calculate the AOV for each month
 #     aov_monthly = df.groupby(['prod_cat', 'year', 'month']).mean().reset_index()
 

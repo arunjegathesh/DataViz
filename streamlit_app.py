@@ -77,7 +77,11 @@ with kpis:
     st.subheader('KPIs Section Analysis')
     col1, col2, col3 = st.columns(3)
     
-    col1.metric("Total Sales", f"€ {filtered_sales/1000000:,.2f}M / € {total_sales/1000000:,.2f}M")
+    with total1:
+      st.image('flaticons/money-bag.png',use_column_width='Auto')
+      #st.metric(label = 'Total Impressions', value= numerize(total_impressions))
+      col1.metric("Total Sales", f"€ {filtered_sales/1000000:,.2f}M / € {total_sales/1000000:,.2f}M")
+    
     col2.metric("Total Quantity", f"{filtered_quantity:,.0f} / {total_quantity:,.0f}")
     col3.metric("Distinct # of Customers", f"{filtered_customers:,.0f} / {total_customers:,.0f}")
     st.markdown('---')

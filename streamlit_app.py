@@ -150,7 +150,7 @@ with bar_plot:
                 height=600, # Change the height as per your requirement
                 title='Spread of sales across Product Sub Categories').interactive()
     
-    #chart = bar_chart + text
+    chart = bar_chart + text
     
     st.altair_chart(text)
 

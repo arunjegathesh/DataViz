@@ -35,7 +35,7 @@ df = get_data()
 # Define the header section
 with header:
     st.title('Retail Sales Analysis')
-    st.subheader('Visualizing seasonal trends in average order value')
+#    st.subheader('Visualizing seasonal trends in average order value')
     st.markdown('---')
 
 with st.sidebar:
@@ -161,6 +161,7 @@ with map_plot:
    #   fig.update_traces(hovertemplate='Total Revenue (€): %{hovertext}<extra></extra>')
       
       st.plotly_chart(fig, use_container_width=True, height=1000)
+      st.write("This map is a wonderful representation of France")
 
       st.markdown('---')
 

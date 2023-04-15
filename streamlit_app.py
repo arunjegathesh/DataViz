@@ -184,7 +184,7 @@ with map_plot:
   
     st.subheader('map chart bla bla')
 
-    geo_filtered = merged_gdf[merged_gdf['year'] == 2013]
+    geo_filtered = merged_gdf[merged_gdf['year'] == year_select]
     
     #geo_filtered = geo_df
 

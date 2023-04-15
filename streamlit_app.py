@@ -137,18 +137,18 @@ with bar_plot:
         height=600, # Change the height as per your requirement
         title='Spread of sales across Product Sub Categories').interactive()
     
-    text = bar_chart.mark_text(
-        align='center',
-        baseline='middle',
-        fontSize=12,
-        dx=0,
-        dy=10
-    ).encode(
-        text=alt.Text('format(datum.total_amt/10000, ".1f") + "K"', type='quantitative')
-    )
+#     text = bar_chart.mark_text(
+#         align='center',
+#         baseline='middle',
+#         fontSize=12,
+#         dx=0,
+#         dy=10
+#     ).encode(
+#         text=alt.Text('format(datum.total_amt/10000, ".1f") + "K"', type='quantitative')
+#     )
     
-    # Combine the bar chart and text labels
-    chart_with_text = (bar_chart + text).interactive()
+#     # Combine the bar chart and text labels
+#     chart_with_text = (bar_chart + text).interactive()
 
     # Display the chart
 #     st.altair_chart(chart_with_text)

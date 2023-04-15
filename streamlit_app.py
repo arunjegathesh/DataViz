@@ -122,34 +122,75 @@ with trend_line:
     
     st.markdown('---')
     
+# with bar_plot:  
+  
+#     st.subheader('Bar Chart bla bla')
+
+#     sales_by_subcat = filtered_data.groupby(['prod_subcat', 'Gender'])['total_amt'].sum().reset_index()
+#     tooltip = [alt.Tooltip('total_amt:N', title='Total Amount (€)', format='.2f'),alt.Tooltip('Gender:N', title='Gender')]
+    
+#     # Format y-axis labels as thousands
+#     y_axis = alt.Axis(title='Total Amount (€)', format='~s')
+    
+#     # Add data labels to the top of the bars
+#     text = alt.Chart(sales_by_subcat).mark_text(dy=-5, color='black').encode(
+#         x=alt.X('prod_subcat', sort='-y',axis=alt.Axis(title='Product Sub-Category', labelAngle=315, labelFontSize=8, labelLimit=80)),
+#         y=alt.Y('total_amt:Q', axis=y_axis, stack=False),
+#         text=alt.Text('total_amt:Q', format='~s'))
+    
+#     bar_chart = alt.Chart(sales_by_subcat).mark_bar().encode(
+#         x=alt.X('prod_subcat', sort='-y',axis=alt.Axis(title='Product Sub-Category', labelAngle=315, labelFontSize=8, labelLimit=80)),
+#         y=alt.Y('total_amt:Q', axis=alt.Axis(title='Total Amount (€)')),
+#         color='Gender:N',
+#         tooltip=tooltip).properties(
+#         width=1200,
+#         height=600, # Change the height as per your requirement
+#         title='Spread of sales across Product Sub Categories').interactive()
+#     chart = bar_chart + text
+    
+#     st.altair_chart(chart)
+
 with bar_plot:  
   
     st.subheader('Bar Chart bla bla')
 
     sales_by_subcat = filtered_data.groupby(['prod_subcat', 'Gender'])['total_amt'].sum().reset_index()
-    tooltip = [alt.Tooltip('total_amt:N', title='Total Amount (€)', format='.2f'),alt.Tooltip('Gender:N', title='Gender')]
     
-    # Format y-axis labels as thousands
-    y_axis = alt.Axis(title='Total Amount (€)', format='~s')
+    # calculate the total sales by subcategory
+    total_sales_by_subcat = filtered_data.groupby('prod_subcat')['total_amt'].sum().reset_index()
+    total_sales_by_subcat = total_sales_by_subcat.rename(columns={'total_amt': 'total_sales'})
     
-    # Add data labels to the top of the bars
-    text = alt.Chart(sales_by_subcat).mark_text(dy=-5, color='black').encode(
-        x=alt.X('prod_subcat', sort='-y',axis=alt.Axis(title='Product Sub-Category', labelAngle=315, labelFontSize=8, labelLimit=80)),
-        y=alt.Y('total_amt:Q', axis=y_axis, stack=False),
-        text=alt.Text('total_amt:Q', format='~s'))
+    # sort the subcategories by total sales
+    sales_by_subcat = sales_by_subcat.merge(total_sales_by_subcat, on='prod_subcat')
+    sales_by_subcat = sales_by_subcat.sort_values(['total_sales', 'prod_subcat'], ascending=[False, True])
     
+    # format the total_amt values as thousands
+    sales_by_subcat['total_amt'] = '€ ' + (sales_by_subcat['total_amt'] / 1000).astype(int).apply(lambda x: '{:,}'.format(x)) + ' K'
+
+    # plot the bar chart with data labels
     bar_chart = alt.Chart(sales_by_subcat).mark_bar().encode(
-        x=alt.X('prod_subcat', sort='-y',axis=alt.Axis(title='Product Sub-Category', labelAngle=315, labelFontSize=8, labelLimit=80)),
+        x=alt.X('prod_subcat:N', sort='-y', axis=alt.Axis(title='Product Sub-Category', labelAngle=315, labelFontSize=8, labelLimit=80)),
         y=alt.Y('total_amt:Q', axis=alt.Axis(title='Total Amount (€)')),
-        color='Gender:N',
-        tooltip=tooltip).properties(
+        color=alt.Color('Gender:N', legend=alt.Legend(title="Gender")),
+        tooltip=[alt.Tooltip('total_amt:N', title='Total Amount (€)', format='.2f'), alt.Tooltip('Gender:N', title='Gender')],
+        text=alt.Text('total_amt:Q', format='.1s'),
+        align='center'
+    ).properties(
         width=1200,
         height=600, # Change the height as per your requirement
-        title='Spread of sales across Product Sub Categories').interactive()
-    chart = bar_chart + text
+        title='Spread of sales across Product Sub Categories'
+    ).configure_axis(
+        labelFontSize=12,
+        titleFontSize=14
+    ).configure_title(
+        fontSize=18
+    )
+
+    # format the y-axis labels as thousands
+    bar_chart.encoding.y.axis.format = 's'
     
-    st.altair_chart(chart)
-    
+    st.altair_chart(bar_chart, use_container_width=True)
+
     st.markdown('---')
 
 with spider_plot:

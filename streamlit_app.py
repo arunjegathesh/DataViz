@@ -280,7 +280,7 @@ with map_plot:
 #                             hover_data={'Total Revenue (€)': True})
                              hover_data={'Total Revenue (€)': ':,.3r K'})
     
-      fig.update_traces(hovertemplate='Total Revenue (€): %{hovertext}<extra></extra>')
+   #   fig.update_traces(hovertemplate='Total Revenue (€): %{hovertext}<extra></extra>')
       
       st.plotly_chart(fig, use_container_width=True, height=1000)
 

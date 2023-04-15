@@ -140,11 +140,12 @@ with bar_plot:
            x=alt.X('prod_subcat', sort='-y', axis=alt.Axis(title='Product Sub-Category',labelAngle=315,labelFontSize=8, labelLimit=80)),
            y=alt.Y('total_amt:Q', axis=y_axis, stack=False),
            text=alt.Text('total_amt:Q', format='0,.3s'))
-    
+
+    color_scale = alt.Scale(domain=['F', 'M'], range=['#FF7F50', '#1F77B4'])
     bar_chart = alt.Chart(sales_by_subcat).mark_bar().encode(
                 x=alt.X('prod_subcat', sort='-y',axis=alt.Axis(title='Product Sub-Category',labelAngle=315,labelFontSize=8, labelLimit=80)),
                 y=alt.Y('total_amt:Q', axis=alt.Axis(title='Total Amount (€)', format = '~s')),
-                color='Gender:N',
+                color=alt.Color('Gender:N', scale=color_scale),
                 tooltip=tooltip).properties(
                 width=1200,
                 height=600 # Change the height as per your requirement

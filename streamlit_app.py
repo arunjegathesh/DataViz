@@ -134,7 +134,7 @@ with bar_plot:
         color='Gender:N',
         tooltip=tooltip).properties(
         width=1200,
-        height=400, # Change the height as per your requirement
+        height=800, # Change the height as per your requirement
         title='Spread of sales across Product Sub Categories').interactive()
     
     st.altair_chart(bar_chart)

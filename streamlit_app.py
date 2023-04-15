@@ -92,6 +92,8 @@ with kpis:
       #st.metric(label = 'Total Impressions', value= numerize(total_impressions))
       st.metric("# of Customers", f"{filtered_customers:,.0f} / {total_customers:,.0f}")
     
+    st.write("Each KPI representing a quick summary of the top metrics from the overall data. This structure aids the any user of the dashboard to get up-to-speed with the business status with a quick glance. Dynamic metrics that show the current selections' data while also showing the overall picture.")
+    
     #col3.metric("Distinct # of Customers", f"{filtered_customers:,.0f} / {total_customers:,.0f}")
     st.markdown('---')
 

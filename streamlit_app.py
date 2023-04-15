@@ -204,25 +204,25 @@ with bar_plot:
 
         sales_by_subcat = filtered_data.groupby(['prod_subcat', 'Gender'])['total_amt'].sum().reset_index()
 
-        label_data = filtered_data.groupby(['prod_subcat'])['total_amt'].sum().reset_index()
+    #    label_data = filtered_data.groupby(['prod_subcat'])['total_amt'].sum().reset_index()
 
         tooltip = [alt.Tooltip('total_amt:N', title='Total Amount (€)', format='.2f'),alt.Tooltip('Gender:N', title='Gender')]
 
-        # Format y-axis labels as thousands
-        y_axis = alt.Axis(title='Total Amount (€)', format='~s')
+#         # Format y-axis labels as thousands
+#         y_axis = alt.Axis(title='Total Amount (€)', format='~s')
 
-        # Add data labels to the top of the bars
-        text = alt.Chart(label_data).mark_text(dy=-5, color='black').encode(
-               x=alt.X('prod_subcat', sort='-y', axis=alt.Axis(title='Product Sub-Category',labelAngle=315,labelFontSize=8, labelLimit=80)),
-               y=alt.Y('total_amt:Q', axis=y_axis, stack=False),
-               text=alt.Text('total_amt:Q', format='0,.3s'))
+#         # Add data labels to the top of the bars
+#         text = alt.Chart(label_data).mark_text(dy=-5, color='black').encode(
+#                x=alt.X('prod_subcat', sort='-y', axis=alt.Axis(title='Product Sub-Category',labelAngle=315,labelFontSize=8, labelLimit=80)),
+#                y=alt.Y('total_amt:Q', axis=y_axis, stack=False),
+#                text=alt.Text('total_amt:Q', format='0,.3s'))
 
         color_scale = alt.Scale(domain=['F', 'M'], range=['#666EF6', '#B54B36'])
         bar_chart = alt.Chart(sales_by_subcat).mark_bar().encode(
                     x=alt.X('prod_subcat', sort='-y',axis=alt.Axis(title='Product Sub-Category',labelAngle=315,labelFontSize=8, labelLimit=80)),
                     y=alt.Y('total_amt:Q', axis=alt.Axis(title='Total Amount (€)', format = '~s')),
                     color=alt.Color('Gender:N', scale=color_scale),
-                    column=alt.Column('Gender:N', header=alt.Header(title=None, labels=False)),
+                    #column=alt.Column('Gender:N', header=alt.Header(title=None, labels=False)),
                     tooltip=tooltip).properties(
                     width=600,
                     height=600 # Change the height as per your requirement

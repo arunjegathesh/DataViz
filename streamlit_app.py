@@ -143,7 +143,7 @@ with bar_plot:
     
     bar_chart = alt.Chart(sales_by_subcat).mark_bar().encode(
                 x=alt.X('prod_subcat', sort='-y',axis=alt.Axis(title='Product Sub-Category',labelAngle=315,labelFontSize=8, labelLimit=80)),
-                y=alt.Y('total_amt:Q', axis=y_axis),
+                y=alt.Y('total_amt:Q', axis=alt.Axis(title='Total Amount (€)', format = '~s')),
                 color='Gender:N',
                 tooltip=tooltip).properties(
                 width=1200,

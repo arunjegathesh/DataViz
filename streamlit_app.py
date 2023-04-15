@@ -140,7 +140,13 @@ with spider_plot:
     
     st.markdown('---')
     
-geo_df = get_data()
+geo_in = get_data()
+
+geo_df = geo_in[
+                   #(geo_in['city_code'].isin(country_filter)) &
+                   (geo_in['year']==year_select) & 
+#                  (geo_in['Gender'] == gender_filter[0]) &
+                   (geo_in['Store_type'].isin(store_filter)) & (geo_in['Age'].between(age_range[0], age_range[1]))]
     
 city_counts = geo_df.groupby(['year', 'city_code'])['transaction_id'].nunique().reset_index()
 city_counts.columns = ['year', 'city_code', 'Transaction Count']
@@ -168,25 +174,15 @@ geo_df['geometry'] = geo_df.apply(get_geometry, axis=1)
 merged_gdf = regions_gdf.merge(city_counts, on='city_code', how='left')
 merged_gdf.dropna(subset=['Transaction Count'], inplace=True)
 
-
-# def get_geo_data():
-#     df = pd.read_csv('merged_gdf.csv')
-    
-# #     df['tran_date'] = pd.to_datetime(df['tran_date'])
-
-# #     df['year'] = df['tran_date'].dt.year
-# #     df['month'] = df['tran_date'].dt.strftime('%b')    
-#     return df
-
-# geo_df = get_geo_data()
-
 with map_plot:  
   
     st.subheader('map chart bla bla')
 
-    geo_filtered = merged_gdf[merged_gdf['year'] == year_select]
+    #geo_filtered = merged_gdf[merged_gdf['year'] == year_select]
     
     #geo_filtered = geo_df
+    
+    geo_filtered = merged_gdf
 
     # Define the mapbox style and center
     mapbox_style = "open-street-map"

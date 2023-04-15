@@ -145,9 +145,9 @@ with bar_plot:
         dx=0,  # shift text to the right
         dy=10  # shift text upwards
     ).encode(
-        text=alt.Text('format(datum.total_amt/10000, ".1f") + "K"')  # format AOV values in thousands
+        text=alt.Text('format(datum.total_amt/10000, ".1f") + "K"',type='quantitative')  # format AOV values in thousands
     )
-
+    
     # Combine the bar chart and text labels
     chart_with_text = (bar_chart + text).interactive()
 

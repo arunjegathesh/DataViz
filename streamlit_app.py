@@ -173,8 +173,7 @@ with bar_plot:
         y=alt.Y('total_amt:Q', axis=alt.Axis(title='Total Amount (€)')),
         color=alt.Color('Gender:N', legend=alt.Legend(title="Gender")),
         tooltip=[alt.Tooltip('total_amt:N', title='Total Amount (€)', format='.2f'), alt.Tooltip('Gender:N', title='Gender')],
-        text=alt.Text('total_amt:Q', format='.1s'),
-        align='center'
+        text=alt.Text('total_amt:Q', format='.1s')
     ).properties(
         width=1200,
         height=600, # Change the height as per your requirement

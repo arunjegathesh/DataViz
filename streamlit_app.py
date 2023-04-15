@@ -137,12 +137,12 @@ with bar_plot:
     
     # Add data labels to the top of the bars
     text = alt.Chart(label_data).mark_text(dy=-5, color='black').encode(
-           x=alt.X('prod_subcat'), axis=alt.Axis(title='Product Sub-Category',labelAngle=315,labelFontSize=8, labelLimit=80),
+           x=alt.X('prod_subcat', axis=alt.Axis(title='Product Sub-Category',labelAngle=315,labelFontSize=8, labelLimit=80)),
            y=alt.Y('total_amt:Q', axis=y_axis, stack=False),
            text=alt.Text('total_amt:Q', format='0,.3s'))
     
     bar_chart = alt.Chart(sales_by_subcat).mark_bar().encode(
-                x=alt.X('prod_subcat', sort='-y'),axis=alt.Axis(title='Product Sub-Category',labelAngle=315,labelFontSize=8, labelLimit=80),
+                x=alt.X('prod_subcat', sort='-y',axis=alt.Axis(title='Product Sub-Category',labelAngle=315,labelFontSize=8, labelLimit=80)),
                 y=alt.Y('total_amt:Q', axis=alt.Axis(title='Total Amount (€)')),
                 color='Gender:N',
                 tooltip=tooltip).properties(

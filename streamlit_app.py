@@ -90,12 +90,14 @@ with trend_line:
     
 #     tooltip = ['prod_cat:N (Product Category)', 'month:N (Month)', 'AOV:Q (Average Order Value)']
 #     new_labels = {'prod_cat': 'Product Category', 'month': 'Month', 'AOV': 'Average Order Value'}
-
+    tooltip = [alt.Tooltip('prod_cat:N', title='Product Category'),alt.Tooltip('month:N', title='Month'),alt.Tooltip('AOV:Q', title='Average Order Value')]
+  
     aov_chart = alt.Chart(aov_monthly).mark_line().encode(
         x=alt.X('month:N', sort=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']),
         y=alt.Y('AOV:Q', axis=alt.Axis(title='Average Order Value (in €)')),
         color='prod_cat:N',
-        tooltip= ['prod_cat:N', title='Product Category', 'month:N',title='dfd Category', 'AOV:Q',title='dfdf Category']
+#         tooltip= ['prod_cat:N', 'month:N', 'AOV:Q']
+        tooltip = tooltip
         ).properties(
         width=1200,
         height=400, # Change the height as per your requirement

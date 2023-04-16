@@ -128,116 +128,40 @@ merged_gdf = regions_gdf.merge(city_counts, on='city_code', how='left')
 merged_gdf.dropna(subset=['Total Revenue (€)'], inplace=True)
 
 
-with test_cont:
-# Define a list to store the selected city codes
-    selected_city_codes = []
-
-    # Define the Streamlit app
-    def main():
-        st.subheader('Where do rich people live in France?')
-
-        geo_filtered = merged_gdf
-
-        # Define the mapbox style and center
-        mapbox_style = "open-street-map"
-        mapbox_center = {"lat": 46.2276, "lon": 2.2137}
-
-        # Define the bounds for Europe
-        bounds = [[-27.070207, -34.276938], [75.0599, 60.238064]]
-
-        # Create a choropleth map with Plotly
-        fig = px.choropleth_mapbox(geo_filtered,
-                                   geojson=geo_filtered.geometry,
-                                   locations=geo_filtered.index,
-                                   color='Total Revenue (€)',
-                                   color_continuous_scale='blues',
-                                   mapbox_style=mapbox_style,
-                                   zoom=3, center=mapbox_center,
-                                   hover_name='city_code',
-                                   hover_data={'Total Revenue (€)': ':,.3r K'})
-
-        # Add the hover event to the plot
-        fig.update_traces(hoverinfo='text+name',
-                          hovertemplate='%{hovertext}<extra></extra>')
-
-        # Plot the map using plotly_chart
-        plotly_fig = st.plotly_chart(fig, use_container_width=True, height=1000)
-
-        # Get the plotly.js script and extract the JSON data from the plot div
-        script_tag = plotly_fig._components[0].script_elem
-        plotly_script = script_tag.attrs['src'].split('Plotly.newPlot("')[1]
-        plotly_script = plotly_script.split('",')[0]
-        plotly_json = json.loads(script_tag.text.split('Plotly.newPlot(')[1].split(', {data: data, layout: layout});')[0])
-
-        # Define a JavaScript callback to handle the plot hover event
-        # This callback updates the selected_city_codes list with the city_code of the hovered location
-        js_callback = """
-        var plotDiv = document.getElementById("%s");
-        plotDiv.on('plotly_hover', function(data) {
-            var hovertext = data.points[0].text;
-            var city_code = hovertext.split('<br>')[0].split(': ')[1];
-            var existing_codes = %s;
-            if (!existing_codes.includes(city_code)) {
-                existing_codes.push(city_code);
-                Streamlit.setComponentValue(existing_codes);
-            }
-        });
-        """ % (plotly_script, json.dumps(selected_city_codes))
-
-        # Add the JavaScript callback to the app
-        st.components.v1.html('<script>' + js_callback + '</script>', height=0)
-
-        # Display the selected city codes using st.write
-        st.write('Selected city codes:', selected_city_codes)
-
-    if __name__ == '__main__':
-        main()
 
 
+with map_plot:  
 
-# with map_plot:  
+      st.subheader('Where do rich people live in France?')
 
-#       st.subheader('Where do rich people live in France?')
+      geo_filtered = merged_gdf
 
-#       geo_filtered = merged_gdf
+      # Define the mapbox style and center
+      mapbox_style = "open-street-map"
+      mapbox_center = {"lat": 46.2276, "lon": 2.2137}
 
-#       # Define the mapbox style and center
-#       mapbox_style = "open-street-map"
-#       mapbox_center = {"lat": 46.2276, "lon": 2.2137}
+      # Define the bounds for Europe
+      bounds = [[-27.070207, -34.276938], [75.0599, 60.238064]]
 
-#       # Define the bounds for Europe
-#       bounds = [[-27.070207, -34.276938], [75.0599, 60.238064]]
+  # Create a choropleth map with Plotly
+      fig = px.choropleth_mapbox(geo_filtered,
+                             geojson=geo_filtered.geometry,
+                             locations=geo_filtered.index,
+                             color='Total Revenue (€)',
+                             color_continuous_scale='blues',
+                             mapbox_style=mapbox_style,
+                             zoom=3, center=mapbox_center,
+                             hover_name='city_code',
+                             hover_data={'Total Revenue (€)': ':,.3r K'})
 
-#   # Create a choropleth map with Plotly
-#       fig = px.choropleth_mapbox(geo_filtered,
-#                              geojson=geo_filtered.geometry,
-#                              locations=geo_filtered.index,
-#                              color='Total Revenue (€)',
-#                              color_continuous_scale='blues',
-#                              mapbox_style=mapbox_style,
-#                              zoom=3, center=mapbox_center,
-#                              hover_name='city_code',
-#                              hover_data={'Total Revenue (€)': ':,.3r K'})
-# #       def handle_selected(trace, points, state):
-# #           city_codes = []
-# #           for point in points.points:
-# #               city_codes.append(point.customdata['hover_name'])
-# #           state['city_codes'] = city_codes
+      st.plotly_chart(fig, use_container_width=True, height=1000)
 
-# #       # Attach a callback to plotly_selected event
-# #       fig.data[0].on_selection(handle_selected)
+      city_list = st.session_state.get('state', {}).get('city_code', [])
 
-# #       # Define an empty dictionary to store the selected city codes
-# #       state = {'city_codes': []}
-
-#       st.plotly_chart(fig, use_container_width=True, height=1000)
-
-#       city_list = st.session_state.get('state', {}).get('city_code', [])
-
-#       st.write(city_list)
+      st.write(city_list)
       
-#       st.write("Introducing our interactive addition for analysis - a heatmap UI! With its intuitive color-coding and data visualization, one can easily spot trends, patterns, and make data-driven decisions. For tracking overall trend of sales our heatmap UI is a powerful tool to take our data analysis to the next level.")
-#       st.markdown('---')
+      st.write("Introducing our interactive addition for analysis - a heatmap UI! With its intuitive color-coding and data visualization, one can easily spot trends, patterns, and make data-driven decisions. For tracking overall trend of sales our heatmap UI is a powerful tool to take our data analysis to the next level.")
+      st.markdown('---')
 
 with trend_line:  
 

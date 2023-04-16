@@ -210,7 +210,7 @@ with bar_plot:
                    alt.Tooltip('total_amt:N', title='Total Amount (€)', format='0,.3s')]
 
         color_scale = alt.Scale(domain=['F', 'M'], range=['#666EF6', '#B54B36'])
-        bar_chart = alt.Chart(sales_by_subcat).mark_bar(width=20).encode(
+        bar_chart = alt.Chart(sales_by_subcat).mark_bar().encode(
                   column=alt.Column('prod_subcat:N', header=alt.Header(title=None, labels=True,orient='bottom',
                                                                        labelAngle=0,labelFontSize=9.5, labelLimit=80),
                                     sort=alt.EncodingSortField(field='total_amt', op='sum', order='descending')),
@@ -218,7 +218,7 @@ with bar_plot:
                   y=alt.Y('total_amt:Q', axis=alt.Axis(grid=False, title='Total Amount (€)', format = '~s')),
                   color=alt.Color('Gender:N', scale=color_scale),
                   tooltip=tooltip).configure_view(
-                  stroke=None, width = 100).interactive()
+                  stroke=None).interactive()
 
 #         sales_by_subcat = filtered_data.groupby(['prod_subcat', 'Gender'])['total_amt'].sum().reset_index()
 

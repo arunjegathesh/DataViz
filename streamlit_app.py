@@ -166,8 +166,9 @@ with map_plot:
    #   fig.update_traces(hovertemplate='Total Revenue (€): %{hovertext}<extra></extra>')
 
       st.plotly_chart(fig, use_container_width=True, height=1000)
-      st.write("This map is a wonderful representation of France")
-
+#      st.write("This map is a wonderful representation of France")
+      
+      st.write("Introducing our interactive addition for analysis - a heatmap UI! With its intuitive color-coding and data visualization, one can easily spot trends, patterns, and make data-driven decisions. For tracking overall trend of sales our heatmap UI is a powerful tool to take our data analysis to the next level.")
       st.markdown('---')
 
 with trend_line:  
@@ -194,6 +195,8 @@ with trend_line:
 
     # Render the chart using Streamlit's Altair chart renderer
     st.altair_chart(aov_chart)
+
+    st.write("Discover the power of trend analysis with our website's latest feature - a visual representation of average order value across product categories over time. With our easy-to-use tool, we can track and compare sales trends over months to make data-driven decisions about the business performance across different product categories.")
 
     st.markdown('---')
 
@@ -275,7 +278,8 @@ with bar_plot:
     #        chart = bar_chart + text
 
     st.altair_chart(bar_chart)
-
+    
+    st.write('Introducing the next feature - a grouped bar visualization that showcases purchasing behavior between male and female customers across various product sub-categories. This intuitive visualization makes it easy to identify buying patterns and preferences between genders, allowing us to make informed decisions about the product offerings. From identifying popular products to creating targeted marketing campaigns, our grouped bar visualization is a key tool for any retail website.')
     st.markdown('---')
 
 #    with col2:
@@ -295,7 +299,11 @@ with spider_plot:
     # Display the radar chart
     st.plotly_chart(fig, use_container_width=True, height=800)
     
+    st.write('Take our retail analysis to the next level with a radar chart UI. This powerful visualization tool allows us to compare multiple metrics across product categories and genders, giving a multi-level view of the retail performance. With its intuitive design and interactive features, our radar chart UI makes it easy to identify trends and make data-driven decisions. Whether we are looking to optimize our marketing strategy or identify areas for growth, our radar chart UI is the perfect solution for any data-driven analysis.')
+
     st.markdown('---')
+             
+st.markdown('[Images Source : Flaticon](https://www.flaticon.com/free-icons/)', unsafe_allow_html=True)
 
 # with bar_plot:  
 

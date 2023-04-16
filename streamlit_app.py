@@ -129,10 +129,10 @@ merged_gdf.dropna(subset=['Total Revenue (€)'], inplace=True)
 
 
 with test_cont:
-    # Define a list to store the selected city codes
+# Define a list to store the selected city codes
     selected_city_codes = []
 
-# Define the Streamlit app
+    # Define the Streamlit app
     def main():
         st.subheader('Where do rich people live in France?')
 
@@ -164,9 +164,10 @@ with test_cont:
         plotly_fig = st.plotly_chart(fig, use_container_width=True, height=1000)
 
         # Get the plotly.js script and extract the JSON data from the plot div
-        plotly_script = plotly_fig._repr_html_().split('Plotly.newPlot("')[1]
+        script_tag = plotly_fig._components[0].script_elem
+        plotly_script = script_tag.attrs['src'].split('Plotly.newPlot("')[1]
         plotly_script = plotly_script.split('",')[0]
-        plotly_json = json.loads(plotly_fig._repr_html_().split('Plotly.newPlot(')[1].split(', {data: data, layout: layout});')[0])
+        plotly_json = json.loads(script_tag.text.split('Plotly.newPlot(')[1].split(', {data: data, layout: layout});')[0])
 
         # Define a JavaScript callback to handle the plot hover event
         # This callback updates the selected_city_codes list with the city_code of the hovered location
@@ -191,6 +192,7 @@ with test_cont:
 
     if __name__ == '__main__':
         main()
+
 
 
 # with map_plot:  

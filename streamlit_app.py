@@ -66,11 +66,11 @@ with st.sidebar:
     age_range = st.slider("Select age range using the slider", min_value=int(df['Age'].min()), max_value=int(df['Age'].max()), 
                           value=(int(df['Age'].min()), int(df['Age'].max())))
 
-    # Create a calendar object in the sidebar
-    selected_dates = st.date_input("Select date range",
-                                    [pd.to_datetime(df["tran_date"]).min(),
-                                    pd.to_datetime(df["tran_date"]).max()],
-                                    key="date_range")
+#     # Create a calendar object in the sidebar
+#     selected_dates = st.date_input("Select date range",
+#                                     [pd.to_datetime(df["tran_date"]).min(),
+#                                     pd.to_datetime(df["tran_date"]).max()],
+#                                     key="date_range")
     
         # Add a reset button
     if st.button("Reset Filters"):
@@ -78,18 +78,18 @@ with st.sidebar:
         year_select = initial_year_select
         store_filter = initial_store_filter
         age_range = initial_age_range
-        selected_dates = [pd.to_datetime(df["tran_date"]).min(), pd.to_datetime(df["tran_date"]).max()]
+        #selected_dates = [pd.to_datetime(df["tran_date"]).min(), pd.to_datetime(df["tran_date"]).max()]
 
-# Filter the data based on the user selection and date range
-mask = (df['city_code'].isin(country_filter)) & (df['year'] == year_select) & (
-    df['Store_type'].isin(store_filter)) & (df['Age'].between(age_range[0], age_range[1]))
-filtered_data = df.loc[mask].loc[(df["tran_date"] >= pd.to_datetime(selected_dates[0])) & (
-        df["tran_date"] <= pd.to_datetime(selected_dates[1]))]
+# # Filter the data based on the user selection and date range
+# mask = (df['city_code'].isin(country_filter)) & (df['year'] == year_select) & (
+#     df['Store_type'].isin(store_filter)) & (df['Age'].between(age_range[0], age_range[1]))
+# filtered_data = df.loc[mask].loc[(df["tran_date"] >= pd.to_datetime(selected_dates[0])) & (
+#         df["tran_date"] <= pd.to_datetime(selected_dates[1]))]
 
-# # filter the data based on the user selection
-# filtered_data = df[(df['city_code'].isin(country_filter)) & 
-#                    (df['year']==year_select) &
-#                    (df['Store_type'].isin(store_filter)) & (df['Age'].between(age_range[0], age_range[1]))]
+# filter the data based on the user selection
+filtered_data = df[(df['city_code'].isin(country_filter)) & 
+                   (df['year']==year_select) &
+                   (df['Store_type'].isin(store_filter)) & (df['Age'].between(age_range[0], age_range[1]))]
 
 # calculate the KPI values for filtered data
 filtered_sales = filtered_data['total_amt'].sum()

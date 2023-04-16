@@ -8,7 +8,7 @@ from typing import Set
 from streamlit_plotly_events import plotly_events
 
 
-@st.experimental_singleton
+@st.cache_resource
 def load_data() -> pd.DataFrame:
     return px.data.tips()
 

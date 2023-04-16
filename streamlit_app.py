@@ -226,7 +226,7 @@ with bar_plot:
     color_scale = alt.Scale(domain=['F', 'M'], range=['#666EF6', '#B54B36'])
     
     bar_chart = alt.Chart(sales_by_subcat).mark_bar(width = 22).encode(
-              column=alt.Column('prod_subcat:N', header=alt.Header(title=None, labels=True,orient='bottom',color='white',
+              column=alt.Column('prod_subcat:N', header=alt.Header(title=None, labels=True,orient='bottom',
                                                                    labelAngle=0,labelFontSize=9.5, labelLimit=80, labelColor='white'),
                                 sort=alt.EncodingSortField(field='total_amt', op='sum', order='descending')),
               x=alt.X('Gender:N', sort='-y',axis=alt.Axis(ticks=False, labels=False, title='')),

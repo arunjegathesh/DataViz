@@ -200,100 +200,100 @@ with trend_line:
 with bar_plot: 
     #col1, col2 = st.columns(2)
     #with col1:  
-st.subheader('Males vs Females! Who shops more?')
+    st.subheader('Males vs Females! Who shops more?')
 
 
-sales_by_subcat = filtered_data.groupby(['prod_subcat', 'Gender'])['total_amt'].sum().reset_index()
+    sales_by_subcat = filtered_data.groupby(['prod_subcat', 'Gender'])['total_amt'].sum().reset_index()
 
-tooltip = [alt.Tooltip('prod_subcat:N', title='Product Sub Category'),
-           alt.Tooltip('Gender:N', title='Gender'),
-           alt.Tooltip('total_amt:N', title='Total Amount (€)', format='0,.3s')]
+    tooltip = [alt.Tooltip('prod_subcat:N', title='Product Sub Category'),
+               alt.Tooltip('Gender:N', title='Gender'),
+               alt.Tooltip('total_amt:N', title='Total Amount (€)', format='0,.3s')]
 
-color_scale = alt.Scale(domain=['F', 'M'], range=['#666EF6', '#B54B36'])
-bar_chart = alt.Chart(sales_by_subcat).mark_bar().encode(
-          column=alt.Column('prod_subcat:N', header=alt.Header(title=None, labels=True,orient='bottom',
-                                                               labelAngle=0,labelFontSize=9.5, labelLimit=80),
-                            sort=alt.EncodingSortField(field='total_amt', op='sum', order='descending')),
-          x=alt.X('Gender:N', sort='-y',axis=alt.Axis(ticks=False, labels=False, title='')),
-          y=alt.Y('total_amt:Q', axis=alt.Axis(grid=False, title='Total Amount (€)', format = '~s')),
-          color=alt.Color('Gender:N', scale=color_scale),
-          tooltip=tooltip).configure_view(
-          stroke=None, width = 25).interactive()
-#         sales_by_subcat = filtered_data.groupby(['prod_subcat', 'Gender'])['total_amt'].sum().reset_index()
+    color_scale = alt.Scale(domain=['F', 'M'], range=['#666EF6', '#B54B36'])
+    bar_chart = alt.Chart(sales_by_subcat).mark_bar().encode(
+              column=alt.Column('prod_subcat:N', header=alt.Header(title=None, labels=True,orient='bottom',
+                                                                   labelAngle=0,labelFontSize=9.5, labelLimit=80),
+                                sort=alt.EncodingSortField(field='total_amt', op='sum', order='descending')),
+              x=alt.X('Gender:N', sort='-y',axis=alt.Axis(ticks=False, labels=False, title='')),
+              y=alt.Y('total_amt:Q', axis=alt.Axis(grid=False, title='Total Amount (€)', format = '~s')),
+              color=alt.Color('Gender:N', scale=color_scale),
+              tooltip=tooltip).configure_view(
+              stroke=None, width = 45).interactive()
+    #         sales_by_subcat = filtered_data.groupby(['prod_subcat', 'Gender'])['total_amt'].sum().reset_index()
 
-#     #    label_data = filtered_data.groupby(['prod_subcat'])['total_amt'].sum().reset_index()
+    #     #    label_data = filtered_data.groupby(['prod_subcat'])['total_amt'].sum().reset_index()
 
-#         tooltip = [alt.Tooltip('total_amt:N', title='Total Amount (€)', format='.2f'),alt.Tooltip('Gender:N', title='Gender')]
+    #         tooltip = [alt.Tooltip('total_amt:N', title='Total Amount (€)', format='.2f'),alt.Tooltip('Gender:N', title='Gender')]
 
-# #         # Format y-axis labels as thousands
-# #         y_axis = alt.Axis(title='Total Amount (€)', format='~s')
+    # #         # Format y-axis labels as thousands
+    # #         y_axis = alt.Axis(title='Total Amount (€)', format='~s')
 
-# #         # Add data labels to the top of the bars
-# #         text = alt.Chart(label_data).mark_text(dy=-5, color='black').encode(
-# #                x=alt.X('prod_subcat', sort='-y', axis=alt.Axis(title='Product Sub-Category',labelAngle=315,labelFontSize=8, labelLimit=80)),
-# #                y=alt.Y('total_amt:Q', axis=y_axis, stack=False),
-# #                text=alt.Text('total_amt:Q', format='0,.3s'))
+    # #         # Add data labels to the top of the bars
+    # #         text = alt.Chart(label_data).mark_text(dy=-5, color='black').encode(
+    # #                x=alt.X('prod_subcat', sort='-y', axis=alt.Axis(title='Product Sub-Category',labelAngle=315,labelFontSize=8, labelLimit=80)),
+    # #                y=alt.Y('total_amt:Q', axis=y_axis, stack=False),
+    # #                text=alt.Text('total_amt:Q', format='0,.3s'))
 
-#         color_scale = alt.Scale(domain=['F', 'M'], range=['#666EF6', '#B54B36'])
-#         bar_chart = alt.Chart(sales_by_subcat).mark_bar().encode(
-#                     x=alt.X('prod_subcat', sort='-y',axis=alt.Axis(title='Product Sub-Category',labelAngle=315,labelFontSize=8, labelLimit=80)),
-#                     y=alt.Y('total_amt:Q', axis=alt.Axis(title='Total Amount (€)', format = '~s')),
-#                     color=alt.Color('Gender:N', scale=color_scale),
-#                     #column=alt.Column('Gender:N', header=alt.Header(title=None, labels=False)),
-#                     tooltip=tooltip).properties(
-#                     width=600,
-#                     height=600 # Change the height as per your requirement
-#     #                 title='Spread of sales across Product Sub Categories'
-#                      ).interactive()
-#         color_scale = alt.Scale(domain=['F', 'M'], range=['#666EF6', '#B54B36'])
+    #         color_scale = alt.Scale(domain=['F', 'M'], range=['#666EF6', '#B54B36'])
+    #         bar_chart = alt.Chart(sales_by_subcat).mark_bar().encode(
+    #                     x=alt.X('prod_subcat', sort='-y',axis=alt.Axis(title='Product Sub-Category',labelAngle=315,labelFontSize=8, labelLimit=80)),
+    #                     y=alt.Y('total_amt:Q', axis=alt.Axis(title='Total Amount (€)', format = '~s')),
+    #                     color=alt.Color('Gender:N', scale=color_scale),
+    #                     #column=alt.Column('Gender:N', header=alt.Header(title=None, labels=False)),
+    #                     tooltip=tooltip).properties(
+    #                     width=600,
+    #                     height=600 # Change the height as per your requirement
+    #     #                 title='Spread of sales across Product Sub Categories'
+    #                      ).interactive()
+    #         color_scale = alt.Scale(domain=['F', 'M'], range=['#666EF6', '#B54B36'])
 
-#         bar_chart = alt.Chart(sales_by_subcat).mark_bar().encode(
-#             x=alt.X('Gender:N', axis=alt.Axis(title='Gender')),
-#             y=alt.Y('total_amt:Q', axis=alt.Axis(title='Total Amount (€)', format='~s')),
-#             color=alt.Color('Gender:N', scale=color_scale),
-#             column=alt.Column('prod_subcat:N', header=alt.Header(labelAngle=-90, labelAlign='right')),
-#             tooltip=tooltip
-#         ).properties(
-#             width=800,
-#             height=600
-#         ).configure_view(
-#             stroke='transparent'
-#         ).interactive()
-    
-#         bar_chart = bar_chart.configure_view(
-#                 stroke='transparent'
-#             ).configure_axisX(
-#                 labelAngle=-45,
-#                 labelAlign='right',
-#                 labelFontSize=8,
-#                 labelLimit=100,
-#                 titleY=35
-#             ).configure_view(
-#                 continuousWidth=300
-#             )
-        
-#        chart = bar_chart + text
+    #         bar_chart = alt.Chart(sales_by_subcat).mark_bar().encode(
+    #             x=alt.X('Gender:N', axis=alt.Axis(title='Gender')),
+    #             y=alt.Y('total_amt:Q', axis=alt.Axis(title='Total Amount (€)', format='~s')),
+    #             color=alt.Color('Gender:N', scale=color_scale),
+    #             column=alt.Column('prod_subcat:N', header=alt.Header(labelAngle=-90, labelAlign='right')),
+    #             tooltip=tooltip
+    #         ).properties(
+    #             width=800,
+    #             height=600
+    #         ).configure_view(
+    #             stroke='transparent'
+    #         ).interactive()
 
-st.altair_chart(bar_chart)
+    #         bar_chart = bar_chart.configure_view(
+    #                 stroke='transparent'
+    #             ).configure_axisX(
+    #                 labelAngle=-45,
+    #                 labelAlign='right',
+    #                 labelFontSize=8,
+    #                 labelLimit=100,
+    #                 titleY=35
+    #             ).configure_view(
+    #                 continuousWidth=300
+    #             )
 
-st.markdown('---')
+    #        chart = bar_chart + text
+
+    st.altair_chart(bar_chart)
+
+    st.markdown('---')
 
 #    with col2:
  with spider_plot:
-st.subheader('Lets scout the categories radar!')
+    st.subheader('Lets scout the categories radar!')
 
-grouped_df = filtered_data.groupby(['prod_cat', 'Gender']).sum().reset_index()
+    grouped_df = filtered_data.groupby(['prod_cat', 'Gender']).sum().reset_index()
 
-# Create a radar chart using Plotly Express
-fig = px.line_polar(grouped_df, r='Qty', theta='prod_cat', color='Gender',
-                  line_close=True, labels={'prod_cat': 'Product Category', 'Qty': 'Quantity'}, template='plotly_dark')
+    # Create a radar chart using Plotly Express
+    fig = px.line_polar(grouped_df, r='Qty', theta='prod_cat', color='Gender',
+                      line_close=True, labels={'prod_cat': 'Product Category', 'Qty': 'Quantity'}, template='plotly_dark')
 
-fig.update_layout(#title=f'Sum of Quantities by Product Category and Gender',
-                polar=dict(radialaxis=dict(visible=True, range=[0, grouped_df['Qty'].max()],color='white')))
-#                       paper_bgcolor='black')
+    fig.update_layout(#title=f'Sum of Quantities by Product Category and Gender',
+                    polar=dict(radialaxis=dict(visible=True, range=[0, grouped_df['Qty'].max()],color='white')))
+    #                       paper_bgcolor='black')
 
-# Display the radar chart
-st.plotly_chart(fig)
+    # Display the radar chart
+    st.plotly_chart(fig)
 
 # with bar_plot:  
 

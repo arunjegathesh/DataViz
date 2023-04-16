@@ -224,8 +224,9 @@ with bar_plot:
                alt.Tooltip('total_amt:N', title='Total Amount (€)', format='0,.3s')]
 
     color_scale = alt.Scale(domain=['F', 'M'], range=['#666EF6', '#B54B36'])
+    
     bar_chart = alt.Chart(sales_by_subcat).mark_bar(width = 22).encode(
-              column=alt.Column('prod_subcat:N', header=alt.Header(title=None, labels=True,orient='bottom',
+              column=alt.Column('prod_subcat:N', header=alt.Header(title=None, labels=True,orient='bottom',color='white',
                                                                    labelAngle=0,labelFontSize=9.5, labelLimit=80),
                                 sort=alt.EncodingSortField(field='total_amt', op='sum', order='descending')),
               x=alt.X('Gender:N', sort='-y',axis=alt.Axis(ticks=False, labels=False, title='')),

@@ -129,17 +129,10 @@ merged_gdf.dropna(subset=['Total Revenue (€)'], inplace=True)
 
 
 with test_cont:
-
     # Define a list to store the selected city codes
     selected_city_codes = []
 
-    # Define the callback function for plotly_clicks
-    @st.cache(allow_output_mutation=True)
-    def update_selected_city_codes(click_data):
-        if click_data:
-            selected_city_codes.append(click_data['points'][0]['hovertext'])
-
-    # Define the Streamlit app
+# Define the Streamlit app
     def main():
         st.subheader('Where do rich people live in France?')
 
@@ -163,22 +156,42 @@ with test_cont:
                                    hover_name='city_code',
                                    hover_data={'Total Revenue (€)': ':,.3r K'})
 
-        # Add the plotly_clicks event to the plot
+        # Add the hover event to the plot
         fig.update_traces(hoverinfo='text+name',
                           hovertemplate='%{hovertext}<extra></extra>')
 
         # Plot the map using plotly_chart
         plotly_fig = st.plotly_chart(fig, use_container_width=True, height=1000)
 
-        # Call the update_selected_city_codes function on plotly_clicks
-        plotly_fig.plotly_events(
-            'plotly_click', update_selected_city_codes)
+        # Get the plotly.js script and extract the JSON data from the plot div
+        plotly_script = plotly_fig._repr_html_().split('Plotly.newPlot("')[1]
+        plotly_script = plotly_script.split('",')[0]
+        plotly_json = json.loads(plotly_fig._repr_html_().split('Plotly.newPlot(')[1].split(', {data: data, layout: layout});')[0])
+
+        # Define a JavaScript callback to handle the plot hover event
+        # This callback updates the selected_city_codes list with the city_code of the hovered location
+        js_callback = """
+        var plotDiv = document.getElementById("%s");
+        plotDiv.on('plotly_hover', function(data) {
+            var hovertext = data.points[0].text;
+            var city_code = hovertext.split('<br>')[0].split(': ')[1];
+            var existing_codes = %s;
+            if (!existing_codes.includes(city_code)) {
+                existing_codes.push(city_code);
+                Streamlit.setComponentValue(existing_codes);
+            }
+        });
+        """ % (plotly_script, json.dumps(selected_city_codes))
+
+        # Add the JavaScript callback to the app
+        st.components.v1.html('<script>' + js_callback + '</script>', height=0)
 
         # Display the selected city codes using st.write
         st.write('Selected city codes:', selected_city_codes)
 
     if __name__ == '__main__':
         main()
+
 
 # with map_plot:  
 

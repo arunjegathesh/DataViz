@@ -299,7 +299,7 @@ with spider_plot:
     # Display the radar chart
     st.plotly_chart(fig, use_container_width=True, height=800)
     
-    st.write('Take our retail analysis to the next level with a radar chart UI. This powerful visualization tool allows us to compare multiple metrics across product categories and genders, giving a multi-level view of the retail performance. With its intuitive design and interactive features, our radar chart UI makes it easy to identify trends and make data-driven decisions. Whether we are looking to optimize our marketing strategy or identify areas for growth, our radar chart UI is the perfect solution for any data-driven analysis.')
+    st.write('Take the retail sales analysis to the next level with a radar chart UI. This powerful visualization tool allows us to compare multiple metrics across product categories and genders, giving a multi-level view of the retail performance. With its intuitive design and interactive features, our radar chart UI makes it easy to identify trends and make data-driven decisions. Whether we are looking to optimize our marketing strategy or identify areas for growth, our radar chart UI is the perfect solution for any data-driven analysis.')
 
     st.markdown('---')
              

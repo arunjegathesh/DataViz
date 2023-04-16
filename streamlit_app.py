@@ -148,6 +148,16 @@ with map_plot:
 
       st.plotly_chart(fig, use_container_width=True, height=1000)
       
+      # Get the selected city codes
+      if 'plotly_click' in st._get_report_ctx().triggered:
+          # Get the event details
+          event_details = st._get_report_ctx().triggered['plotly_click']
+          # Parse the event details JSON
+          event_details_json = json.loads(event_details)
+          # Extract the selected city codes from the selectedData attribute
+          selected_city_codes = [point_data['hovertext'] for point_data in event_details_json['value']['points']]
+      st.write(selected_city_codes)
+      
       st.write("Introducing our interactive addition for analysis - a heatmap UI! With its intuitive color-coding and data visualization, one can easily spot trends, patterns, and make data-driven decisions. For tracking overall trend of sales our heatmap UI is a powerful tool to take our data analysis to the next level.")
       st.markdown('---')
 

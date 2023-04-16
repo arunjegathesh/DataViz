@@ -43,5 +43,5 @@ st.title('Bar Chart with Lasso Select')
 st.altair_chart((chart + highlight).properties(width=600, height=400).add_selection(selector, lasso), use_container_width=True)
 
 # display the selected x-axis values
-selected_x_values = [data.iloc[int(np.round(event['x']))]['x'] for event in chart.selection.values()]
+selected_x_values = [data.iloc[int(np.round(event['datum']['x']))]['x'] for event in chart.selection.values()]
 st.write('Selected x-axis values:', selected_x_values)

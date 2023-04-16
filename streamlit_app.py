@@ -12,7 +12,6 @@ import streamlit as st
 import plotly.express as px
 import json
 
-
 st.set_page_config(page_title = 'Retail Sales Analysis',
                    layout='wide',
                    initial_sidebar_state='collapsed')
@@ -60,10 +59,22 @@ with st.sidebar:
     age_range = st.slider("Select age range using the slider", min_value=int(df['Age'].min()), max_value=int(df['Age'].max()), 
                           value=(int(df['Age'].min()), int(df['Age'].max())))
 
-# filter the data based on the user selection
-filtered_data = df[(df['city_code'].isin(country_filter)) & 
-                   (df['year']==year_select) &
-                   (df['Store_type'].isin(store_filter)) & (df['Age'].between(age_range[0], age_range[1]))]
+    # Create a calendar object in the sidebar
+    selected_dates = st.date_input("Select a date range from the Transaction Date",
+                                    [(df["tran_date"]).min(),
+                                    (df["tran_date"]).max()],
+                                    key="date_range")
+
+
+mask = (df['city_code'].isin(country_filter)) & (df['year'] == year_select) & (
+    df['Store_type'].isin(store_filter)) & (df['Age'].between(age_range[0], age_range[1]))
+filtered_data = df.loc[mask].loc[((df["tran_date"]) >= pd.to_datetime(selected_dates[0])) & (
+        (df["tran_date"]) <= pd.to_datetime(selected_dates[1]))]
+
+# # filter the data based on the user selection
+# filtered_data = df[(df['city_code'].isin(country_filter)) & 
+#                    (df['year']==year_select) &
+#                    (df['Store_type'].isin(store_filter)) & (df['Age'].between(age_range[0], age_range[1]))]
 
 # calculate the KPI values for filtered data
 filtered_sales = filtered_data['total_amt'].sum()
@@ -96,9 +107,14 @@ with kpis:
     
     st.markdown('---')
 
-geo_in = get_data()
+# geo_in = get_data()
 
-geo_df = geo_in[(geo_in['year']==year_select) & (geo_in['Store_type'].isin(store_filter)) & (geo_in['Age'].between(age_range[0], age_range[1]))]
+# geo_df = geo_in[(df['city_code'].isin(country_filter)) & 
+#                 (geo_in['year']==year_select) & 
+#                 (geo_in['Store_type'].isin(store_filter)) & 
+#                 (geo_in['Age'].between(age_range[0], age_range[1]))]
+
+geo_df = filtered_data
 
 city_counts = geo_df.groupby(['year', 'city_code'])['total_amt'].sum().reset_index()
 city_counts.columns = ['year', 'city_code', 'Total Revenue (€)']
@@ -126,9 +142,6 @@ geo_df['geometry'] = geo_df.apply(get_geometry, axis=1)
 # Join the transaction data to the GeoPandas DataFrame based on city names
 merged_gdf = regions_gdf.merge(city_counts, on='city_code', how='left')
 merged_gdf.dropna(subset=['Total Revenue (€)'], inplace=True)
-
-
-
 
 with map_plot:  
 

@@ -1,4 +1,4 @@
-pip install streamlit_plotly_events
+!pip install streamlit_plotly_events
 
 import pandas as pd
 import plotly.express as px

@@ -294,6 +294,8 @@ with bar_plot:
 
     # Display the radar chart
     st.plotly_chart(fig)
+    
+    st.markdown('---')
 
 # with bar_plot:  
 
@@ -335,7 +337,6 @@ with bar_plot:
 
 #     st.altair_chart(bar_chart, use_container_width=True)
 
-st.markdown('---')
   
 # with spider_plot:
 

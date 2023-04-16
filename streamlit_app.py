@@ -19,7 +19,7 @@ kpis = st.container()
 map_plot = st.container()
 trend_line = st.container()
 bar_plot = st.container()
-spinner_cont = st.container()
+spider_plot = st.container()
 
 @st.cache_data
 def get_data():
@@ -198,27 +198,27 @@ with trend_line:
     st.markdown('---')
 
 with bar_plot: 
-    col1, col2 = st.columns(2)
-    with col1:  
-        st.subheader('Males vs Females! Who shops more?')
+    #col1, col2 = st.columns(2)
+    #with col1:  
+st.subheader('Males vs Females! Who shops more?')
 
-        
-        sales_by_subcat = filtered_data.groupby(['prod_subcat', 'Gender'])['total_amt'].sum().reset_index()
 
-        tooltip = [alt.Tooltip('prod_subcat:N', title='Product Sub Category'),
-                   alt.Tooltip('Gender:N', title='Gender'),
-                   alt.Tooltip('total_amt:N', title='Total Amount (€)', format='0,.3s')]
+sales_by_subcat = filtered_data.groupby(['prod_subcat', 'Gender'])['total_amt'].sum().reset_index()
 
-        color_scale = alt.Scale(domain=['F', 'M'], range=['#666EF6', '#B54B36'])
-        bar_chart = alt.Chart(sales_by_subcat).mark_bar().encode(
-                  column=alt.Column('prod_subcat:N', header=alt.Header(title=None, labels=True,orient='bottom',
-                                                                       labelAngle=0,labelFontSize=9.5, labelLimit=80),
-                                    sort=alt.EncodingSortField(field='total_amt', op='sum', order='descending')),
-                  x=alt.X('Gender:N', sort='-y',axis=alt.Axis(ticks=False, labels=False, title='')),
-                  y=alt.Y('total_amt:Q', axis=alt.Axis(grid=False, title='Total Amount (€)', format = '~s')),
-                  color=alt.Color('Gender:N', scale=color_scale),
-                  tooltip=tooltip).configure_view(
-                  stroke=None, width = 25).interactive()
+tooltip = [alt.Tooltip('prod_subcat:N', title='Product Sub Category'),
+           alt.Tooltip('Gender:N', title='Gender'),
+           alt.Tooltip('total_amt:N', title='Total Amount (€)', format='0,.3s')]
+
+color_scale = alt.Scale(domain=['F', 'M'], range=['#666EF6', '#B54B36'])
+bar_chart = alt.Chart(sales_by_subcat).mark_bar().encode(
+          column=alt.Column('prod_subcat:N', header=alt.Header(title=None, labels=True,orient='bottom',
+                                                               labelAngle=0,labelFontSize=9.5, labelLimit=80),
+                            sort=alt.EncodingSortField(field='total_amt', op='sum', order='descending')),
+          x=alt.X('Gender:N', sort='-y',axis=alt.Axis(ticks=False, labels=False, title='')),
+          y=alt.Y('total_amt:Q', axis=alt.Axis(grid=False, title='Total Amount (€)', format = '~s')),
+          color=alt.Color('Gender:N', scale=color_scale),
+          tooltip=tooltip).configure_view(
+          stroke=None, width = 25).interactive()
 #         sales_by_subcat = filtered_data.groupby(['prod_subcat', 'Gender'])['total_amt'].sum().reset_index()
 
 #     #    label_data = filtered_data.groupby(['prod_subcat'])['total_amt'].sum().reset_index()
@@ -274,23 +274,26 @@ with bar_plot:
         
 #        chart = bar_chart + text
 
-        st.altair_chart(bar_chart)
+st.altair_chart(bar_chart)
 
-    with col2:
-        st.subheader('Lets scout the categories radar!')
+st.markdown('---')
 
-        grouped_df = filtered_data.groupby(['prod_cat', 'Gender']).sum().reset_index()
+#    with col2:
+ with spider_plot:
+st.subheader('Lets scout the categories radar!')
 
-        # Create a radar chart using Plotly Express
-        fig = px.line_polar(grouped_df, r='Qty', theta='prod_cat', color='Gender',
-                          line_close=True, labels={'prod_cat': 'Product Category', 'Qty': 'Quantity'}, template='plotly_dark')
+grouped_df = filtered_data.groupby(['prod_cat', 'Gender']).sum().reset_index()
 
-        fig.update_layout(#title=f'Sum of Quantities by Product Category and Gender',
-                        polar=dict(radialaxis=dict(visible=True, range=[0, grouped_df['Qty'].max()],color='white')))
-        #                       paper_bgcolor='black')
+# Create a radar chart using Plotly Express
+fig = px.line_polar(grouped_df, r='Qty', theta='prod_cat', color='Gender',
+                  line_close=True, labels={'prod_cat': 'Product Category', 'Qty': 'Quantity'}, template='plotly_dark')
 
-        # Display the radar chart
-        st.plotly_chart(fig)
+fig.update_layout(#title=f'Sum of Quantities by Product Category and Gender',
+                polar=dict(radialaxis=dict(visible=True, range=[0, grouped_df['Qty'].max()],color='white')))
+#                       paper_bgcolor='black')
+
+# Display the radar chart
+st.plotly_chart(fig)
 
 # with bar_plot:  
 
@@ -332,7 +335,7 @@ with bar_plot:
 
 #     st.altair_chart(bar_chart, use_container_width=True)
 
-    st.markdown('---')
+st.markdown('---')
   
 # with spider_plot:
 

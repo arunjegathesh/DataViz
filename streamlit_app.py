@@ -43,18 +43,25 @@ with header:
     
     st.markdown('---')
 
+    
+# Define initial filter values
+initial_country_filter = df['city_code'].unique()
+initial_year_select = np.sort(df['year'].unique()).tolist()[0]
+initial_store_filter = df['Store_type'].unique()
+initial_age_range = (int(df['Age'].min()), int(df['Age'].max()))
+
 with st.sidebar:
 
     country_filter = st.multiselect(label= 'Select the required region (multiselect)',
                                 options=df['city_code'].unique(),
-                                default=df['city_code'].unique())
+                                default=initial_country_filter)
 
     year_select = st.radio(label= 'Select the required year (single select)',
                                 options=np.sort(df['year'].unique()).tolist())
 
     store_filter = st.multiselect(label= 'Select the store type (multiselect)',
                                 options=df['Store_type'].unique(),
-                                default=df['Store_type'].unique())
+                                default=initial_store_filter)
 
     age_range = st.slider("Select age range using the slider", min_value=int(df['Age'].min()), max_value=int(df['Age'].max()), 
                           value=(int(df['Age'].min()), int(df['Age'].max())))
@@ -64,6 +71,14 @@ with st.sidebar:
                                     [pd.to_datetime(df["tran_date"]).min(),
                                     pd.to_datetime(df["tran_date"]).max()],
                                     key="date_range")
+    
+        # Add a reset button
+    if st.button("Reset Filters"):
+        country_filter = initial_country_filter
+        year_select = initial_year_select
+        store_filter = initial_store_filter
+        age_range = initial_age_range
+        selected_dates = [pd.to_datetime(df["tran_date"]).min(), pd.to_datetime(df["tran_date"]).max()]
 
 # Filter the data based on the user selection and date range
 mask = (df['city_code'].isin(country_filter)) & (df['year'] == year_select) & (

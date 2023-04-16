@@ -218,7 +218,7 @@ with bar_plot:
                   y=alt.Y('total_amt:Q', axis=alt.Axis(grid=False, title='Total Amount (€)', format = '~s')),
                   color=alt.Color('Gender:N', scale=color_scale),
                   tooltip=tooltip).configure_view(
-                  stroke=None, width = 42).interactive()
+                  stroke=None, width = 100).interactive()
 
 #         sales_by_subcat = filtered_data.groupby(['prod_subcat', 'Gender'])['total_amt'].sum().reset_index()
 

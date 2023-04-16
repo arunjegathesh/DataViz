@@ -279,7 +279,7 @@ with bar_plot:
     st.markdown('---')
 
 #    with col2:
- with spider_plot:
+with spider_plot:
     st.subheader('Lets scout the categories radar!')
 
     grouped_df = filtered_data.groupby(['prod_cat', 'Gender']).sum().reset_index()

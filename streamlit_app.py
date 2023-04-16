@@ -169,9 +169,9 @@ with map_plot:
 
       st.plotly_chart(fig, use_container_width=True, height=1000)
 
-      city_list = st.session_state.get('state', {}).get('city_code', [])
+#       city_list = st.session_state.get('state', {}).get('city_code', [])
 
-      st.write(city_list)
+#       st.write(city_list)
       
       st.write("Introducing our interactive addition for analysis - a heatmap UI! With its intuitive color-coding and data visualization, one can easily spot trends, patterns, and make data-driven decisions. For tracking overall trend of sales our heatmap UI is a powerful tool to take our data analysis to the next level.")
       st.markdown('---')

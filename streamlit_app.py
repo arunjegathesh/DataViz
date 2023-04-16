@@ -303,7 +303,7 @@ with spider_plot:
 
     st.markdown('---')
              
-st.markdown('[Images Source : Flaticon](https://www.flaticon.com/free-icons/)', unsafe_allow_html=True)
+st.markdown('[Images Source : Flaticon](https://www.flaticon.com)', unsafe_allow_html=True)
 
 # with bar_plot:  
 

@@ -145,19 +145,21 @@ with map_plot:
                              zoom=3, center=mapbox_center,
                              hover_name='city_code',
                              hover_data={'Total Revenue (€)': ':,.3r K'})
+      def handle_selected(trace, points, state):
+          city_codes = []
+          for point in points.points:
+              city_codes.append(point.customdata['hover_name'])
+          state['city_codes'] = city_codes
+
+      # Attach a callback to plotly_selected event
+      fig.data[0].on_selection(handle_selected)
+
+      # Define an empty dictionary to store the selected city codes
+      state = {'city_codes': []}
 
       st.plotly_chart(fig, use_container_width=True, height=1000)
       
-      # Get the selected city codes
-      ctx = st.get_report_ctx()
-      if ctx.triggered:
-          # Get the event details
-          event_details = ctx.triggered[0]['prop_id'].split('.')
-          # Check if the event was triggered by a click on the map
-          if event_details[0] == 'plotly_click':
-              # Extract the selected city codes from the selectedData attribute
-              selected_city_codes = [point_data['hovertext'] for point_data in json.loads(event_details[1])['points']]
-              st.write(selected_city_codes)
+      st.write(state)
       
       st.write("Introducing our interactive addition for analysis - a heatmap UI! With its intuitive color-coding and data visualization, one can easily spot trends, patterns, and make data-driven decisions. For tracking overall trend of sales our heatmap UI is a powerful tool to take our data analysis to the next level.")
       st.markdown('---')

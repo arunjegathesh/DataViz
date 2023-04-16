@@ -5,3 +5,4 @@ pygal==3.0.0
 plotly==5.13.1
 dash==2.9.3
 geopandas==0.12.2
+streamlit_plotly_events==0.0.6

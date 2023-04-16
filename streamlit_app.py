@@ -293,7 +293,7 @@ with spider_plot:
     #                       paper_bgcolor='black')
 
     # Display the radar chart
-    st.plotly_chart(fig)
+    st.plotly_chart(fig, use_container_width=True, height=600)
     
     st.markdown('---')
 
